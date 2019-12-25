@@ -1,0 +1,19 @@
+# mysql
+spring:
+  # 环境 dev|test|prod
+  profiles:
+    active: dev
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 100MB
+      enabled: true
+  jackson:
+    serialization:
+      write-dates-as-timestamps: true
+
+
+logback:
+   path: ./logs
+   name: eyecloud-api
+   

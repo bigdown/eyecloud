@@ -1,0 +1,11 @@
+*.settings
+*.git
+*target
+*.classpath
+*.project
+*cc_home_IS_UNDEFINED
+*.iml
+*.log
+*.metadata
+Servers
+*eyecloud-generator

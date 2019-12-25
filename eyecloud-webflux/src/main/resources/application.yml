@@ -1,0 +1,32 @@
+# mysql
+spring:
+  # 环境 dev|test|prod
+  profiles:
+    active: dev
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 100MB
+      enabled: true
+  jackson:
+    serialization:
+      write-dates-as-timestamps: true
+  freemarker:
+    request-context-attribute: request  #req访问request
+    suffix: .ftl  #后缀名
+    content-type: text/html
+    enabled: true
+    cache: false #缓存配置
+    template-loader-path: classpath:/templates/ #模板加载路径 按需配置
+    charset: UTF-8 #编码格式
+    settings:
+      number_format: '0.##'   #数字格式化，无小数点
+    
+system:
+  cluster: false  #集群配置  true集群环境   false单机环境，还需打开pom.xml里的spring-session-data-redis注释
+  globalSessionTimeout: 3600
+
+logback:
+   path: ./logs
+   name: eyecloud-web
+   

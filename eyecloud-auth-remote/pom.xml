@@ -1,0 +1,87 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.qding</groupId>
+		<artifactId>eyecloud</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+	<artifactId>eyecloud-auth-remote</artifactId>
+
+	<dependencies>
+
+		<dependency>
+			<groupId>org.apache.zookeeper</groupId>
+			<artifactId>zookeeper</artifactId>
+		</dependency>
+
+		<!-- disconf服务与发现 -->
+		<dependency>
+			<groupId>com.baidu.disconf</groupId>
+			<artifactId>disconf-client</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>dubbo</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>com.github.sgroschupf</groupId>
+			<artifactId>zkclient</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter</artifactId>
+		</dependency>
+		<!-- javassist -->
+		<dependency>
+			<groupId>org.javassist</groupId>
+			<artifactId>javassist</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<!-- 业务jar包 start -->
+		<dependency>
+			<groupId>com.qding</groupId>
+			<artifactId>eyecloud-auth-facade</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>com.qding</groupId>
+			<artifactId>eyecloud-data-center-facade</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>com.qding</groupId>
+			<artifactId>eyecloud-common</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>com.qding</groupId>
+			<artifactId>eyecloud-dao</artifactId>
+		</dependency>
+		<!-- 业务jar包 end -->
+
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<executable>true</executable>
+					<fork>true</fork>
+				</configuration>
+			</plugin>
+
+		</plugins>
+	</build>
+</project>
