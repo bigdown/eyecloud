@@ -14,25 +14,25 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.SignatureException;
 
 public class JwtUtils {
-    
+
     private JwtUtils() {
-        
+
     }
-    
+
     public static final String TOKEN_HEADER = "token";
-    
+
     public static final String TOKEN_PREFIX = "eyecloud ";
-    
+
     private static final String SECRET = "jwt-eyecloud-secret";
-    
+
     private static final String ISS = "eyecloud";
-    
+
     // 过期时间是3600秒，既是1个小时
     public static final long EXPIRATION = 604800L;
-    
+
     // 选择了记住我之后的过期时间为7天
     public static final long EXPIRATION_REMEMBER = 604800L;
-    
+
     /**
      * 创建token
      * 注：如果是根据可变的唯一值来生成，唯一值变化时，需重新生成token
@@ -56,7 +56,7 @@ public class JwtUtils {
             .setExpiration(new Date(System.currentTimeMillis() + expiration * 1000))
             .compact();
     }
-    
+
     /**
      * 从token中获取用户名
      * @param token
@@ -65,7 +65,7 @@ public class JwtUtils {
     public static String getSubject(String token) {
         return getTokenBody(token).getSubject();
     }
-    
+
     /**
      * 从token中获取ID，同时做解密处理
      * @param token
@@ -74,11 +74,10 @@ public class JwtUtils {
     public static String getObjectId(String token) {
         return getTokenBody(token).getId();
     }
-    
+
     /**
      * 获取token信息，同时也做校验处理
      * @param token
-     * @throws	 自定义UserLoginException异常处理
      * @return
      */
     public static Claims getTokenBody(String token) {
@@ -92,7 +91,7 @@ public class JwtUtils {
             throw new CommonException("token失效", String.valueOf(HttpStatus.SC_UNAUTHORIZED));
         }
     }
-    
+
     public static String generateSalt() {
         Random r = new Random();
         StringBuilder sb = new StringBuilder(16);

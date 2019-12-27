@@ -3,8 +3,8 @@ spring:
     type: com.alibaba.druid.pool.DruidDataSource
     driverClassName: com.mysql.jdbc.Driver
     druid:
-      url: jdbc:mysql://localhost:3306/eyecloud?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&useUnicode=true&zeroDateTimeBehavior=convertToNull&useSSL=false
-      username: root
+      url: jdbc:mysql://10.39.245.167:3306/eyecloud?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&useUnicode=true&zeroDateTimeBehavior=convertToNull&useSSL=false
+      username: tanshen
       password: 1234qwer
       initial-size: 10
       max-active: 100
@@ -46,7 +46,7 @@ spring:
         - 10.39.251.118:6379
         - 10.39.251.116:6379
         - 10.39.251.117:6379
-        
+
 #    host: 192.168.0.38
 #    port: 6379
 #    password:      # 密码（默认为空）

@@ -11,6 +11,7 @@
 	<property resource="application.yml" />
 	<springProperty scope="context" name="logPath" source="logback.path" />
 	<springProperty scope="context" name="appName" source="logback.name" />
+	<springProperty scope="context" name="profilesActive" source="spring.profiles.active" />
 
 	<!-- 最大保存时间 30天 -->
 	<property name="maxHistory" value="3" />
@@ -82,7 +83,11 @@
 	<!-- 在定义后引用APPENDER -->
 	<root level="INFO">
 		<!-- 控制台 -->
-		<appender-ref ref="STDOUT" />
+		<if condition='property("profilesActive").equals("dev")'>
+			<then>
+				<appender-ref ref="STDOUT" />
+			</then>
+		</if>
 		<!-- 具体的日志级别和文件的配置 -->
 		<appender-ref ref="ASYNC_LOG_INFO" />
 	</root>
@@ -95,5 +100,8 @@
 	</logger>
 	<logger name="java.sql.PreparedStatement" additivity="false" level="DEBUG">
 		<appender-ref ref="ASYNC_LOG_DEBUG" />
+	</logger>
+	<logger name="com.qding.eyecloud" additivity="false" level="DEBUG">
+		<appender-ref ref="ASYNC_LOG_INFO" />
 	</logger>
 </configuration>

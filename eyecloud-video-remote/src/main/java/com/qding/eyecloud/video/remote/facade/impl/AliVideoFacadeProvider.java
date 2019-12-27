@@ -54,24 +54,24 @@ import com.qding.eyecloud.video.remote.utils.AliyunVideoStreamUtil;
  */
 @Service
 public class AliVideoFacadeProvider implements IAliVideoFacade {
-    
+
     @Autowired
     private IVideoDeviceDao iVideoDeviceDao;
-    
+
     @Autowired
     private IVideoGroupDao iVideoGroupDao;
-    
+
     @Autowired
     private IVideoDeviceChannelDao iVideoDeviceChannelDao;
-    
+
     public static DefaultProfile PROFILE =
         DefaultProfile.getProfile("cn-shanghai", "LTAI4Ffew9GwqygMKApVfRDe", "c4zIVTu6NOeUvKdRDNnpcSRXyc5sgE");
-    
+
     @Override
     public String manageVideo(VideoDevice request) {
         A.checkParams(request == null || StringUtils
             .isAnyBlank(request.getGbId(), request.getUsername(), request.getPassword(), request.getName()));
-        
+
         if (StringUtils.isBlank(request.getId())) {
             request.setId(SnowFlake.createSnowFlake().nextIdString());
             setGroupId(request);
@@ -83,7 +83,7 @@ public class AliVideoFacadeProvider implements IAliVideoFacade {
         }
         return request.getId();
     }
-    
+
     /**
      * Desc:检查gbId是否已经被占用
      * Info:<功能详细描述>
@@ -98,14 +98,14 @@ public class AliVideoFacadeProvider implements IAliVideoFacade {
             .ne(VideoDevice::getId, request.getId()));
         A.checkBusiness(exist > 0, "已经存在相同的国标id，请修改国标id的值再次提交");
     }
-    
+
     private void setGroupId(VideoDevice request) {
         // 获取空间id
         List<VideoGroup> videoGroups = iVideoGroupDao.list();
         A.checkBusiness(CollectionUtils.isEmpty(videoGroups), "空间未配置");
         request.setGroupId(videoGroups.stream().findFirst().get().getId());
     }
-    
+
     @Override
     public String removeVideo(BaseRequest request) {
         A.checkParams(request == null || StringUtils.isBlank(request.getId()));
@@ -116,7 +116,7 @@ public class AliVideoFacadeProvider implements IAliVideoFacade {
         iVideoDeviceDao.updateById(entity);
         return Constants.COMMON_SUCCESS;
     }
-    
+
     @Override
     public String getDevicePreviewUrl(VideoPreviewVO request) {
         String previewUrl = null;
@@ -135,32 +135,32 @@ public class AliVideoFacadeProvider implements IAliVideoFacade {
         }
         return previewUrl;
     }
-    
+
     @Override
     public String syncDevice(BaseRequest request) {
         A.checkParams(request == null);
         syncDeviceCore(request);
         return Constants.COMMON_SUCCESS;
     }
-    
+
     @Override
     public String startDevice(BaseRequest request) {
         A.checkParams(request == null || StringUtils.isBlank(request.getId()));
-        
+
         VideoDevice videoDevice = iVideoDeviceDao.getById(request.getId());
         A.checkBusiness(videoDevice == null, "设备不存在");
         A.checkBusiness(StringUtils.isBlank(videoDevice.getDeviceId()), "设备还未同步，暂不支持该操作");
-        
+
         StartDeviceRequest startDeviceRequest = new StartDeviceRequest();
         startDeviceRequest.setId(videoDevice.getDeviceId());
         // 开启某个设备
         AliyunVideoDeviceUtil.startDevice(PROFILE, startDeviceRequest);
-        
+
         // 同步通道
         syncDeviceChannels(request);
         return Constants.COMMON_SUCCESS;
     }
-    
+
     @Override
     public String stopDevice(BaseRequest request) {
         if (StringUtils.isNotBlank(request.getId())) {
@@ -182,7 +182,7 @@ public class AliVideoFacadeProvider implements IAliVideoFacade {
         }
         return Constants.COMMON_SUCCESS;
     }
-    
+
     @Override
     public String unlockDevice(BaseRequest request) {
         A.checkParams(request == null || StringUtils.isBlank(request.getId()));
@@ -191,17 +191,17 @@ public class AliVideoFacadeProvider implements IAliVideoFacade {
         AliyunVideoDeviceUtil.unlockDevice(PROFILE, request.getId());
         return Constants.COMMON_SUCCESS;
     }
-    
+
     @Override
     public String syncDeviceChannels(BaseRequest request) {
         A.checkParams(request == null || StringUtils.isBlank(request.getId()));
         VideoDevice videoDevice = iVideoDeviceDao.getById(request.getId());
         A.checkBusiness(videoDevice == null, "设备不存在");
-        
+
         // 获取设备通道信息
         DescribeDeviceChannelsResponse response =
             AliyunVideoDeviceUtil.describeDeviceChannels(PROFILE, request.getId());
-        
+
         if (response != null && !CollectionUtils.isEmpty(response.getChannels())) {
             // 先删除之前的通道信息
             Collection<VideoDeviceChannel> entityList = new ArrayList<VideoDeviceChannel>();
@@ -224,7 +224,7 @@ public class AliVideoFacadeProvider implements IAliVideoFacade {
         }
         return Constants.COMMON_SUCCESS;
     }
-    
+
     @Override
     public String deviceHeartBeat(VideoCallbackRequest request) {
         // 设备消息（改变设备上线下线状态）
@@ -254,7 +254,7 @@ public class AliVideoFacadeProvider implements IAliVideoFacade {
         }
         return Constants.COMMON_SUCCESS;
     }
-    
+
     @Override
     public String getSnapshot(BaseRequest request) {
         A.checkParams(request == null || StringUtils.isBlank(request.getId()));
@@ -263,7 +263,7 @@ public class AliVideoFacadeProvider implements IAliVideoFacade {
         String url = AliyunVideoDeviceUtil.createStreamSnapshot(PROFILE, videoDevice.getDeviceStreamId());
         return url;
     }
-    
+
     /**
      * Desc:核心同步设备方法
      * Info:<功能详细描述>
@@ -311,7 +311,7 @@ public class AliVideoFacadeProvider implements IAliVideoFacade {
             }
             allIds.add(videoDevice.getDeviceId());
         }
-        
+
         if (!CollectionUtils.isEmpty(remoteDeleteIds)) {
             VideoDevice entity = new VideoDevice();
             entity.setDeviceStatus(VideoDeviceEnum.SYNCING.getCode());
@@ -327,7 +327,7 @@ public class AliVideoFacadeProvider implements IAliVideoFacade {
             }
             iVideoDeviceDao.updateBatchById(remoteModifyObjs);
         }
-        
+
         // 远程CreateDevice
         if (!CollectionUtils.isEmpty(remoteAddObjs)) {
             for (VideoDevice videoDevice : remoteAddObjs) {
@@ -336,7 +336,7 @@ public class AliVideoFacadeProvider implements IAliVideoFacade {
             }
             iVideoDeviceDao.updateBatchById(remoteAddObjs);
         }
-        
+
         // 异步操作
         if (!CollectionUtils.isEmpty(remoteDeleteIds)) {
             syncDelete(remoteDeleteIds);
@@ -350,7 +350,7 @@ public class AliVideoFacadeProvider implements IAliVideoFacade {
             syncCreate(remoteAddIds);
         }
     }
-    
+
     /**
      * Desc:阿里云视频平台同步删除
      * Info:<功能详细描述>
@@ -377,7 +377,7 @@ public class AliVideoFacadeProvider implements IAliVideoFacade {
             }
         }
     }
-    
+
     /**
      * Desc:阿里云视频平台同步修改
      * Info:<功能详细描述>
@@ -411,7 +411,7 @@ public class AliVideoFacadeProvider implements IAliVideoFacade {
         }
         iVideoDeviceDao.updateBatchById(remoteModifyObjs);
     }
-    
+
     /**
      * Desc:阿里云视频平台同步新增
      * Info:<功能详细描述>
@@ -446,12 +446,5 @@ public class AliVideoFacadeProvider implements IAliVideoFacade {
             }
         }
         iVideoDeviceDao.updateBatchById(remoteAddObjs);
-    }
-    
-    public static void main(String[] args) {
-        List<String> list = new ArrayList<String>();
-        list.add("1");
-        list.add("2");
-        System.out.println(StringUtils.join(list, ","));
     }
 }

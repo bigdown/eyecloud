@@ -24,9 +24,18 @@ public interface IAuthFacade {
 	 */
 	String generateToken(AuthUser authUser);
 
+
 	/**
-	 * 注册
-	 */
+	 * 一句话功能简述
+	 * 功能详细描述
+	 * @param [authUser]
+	 * @return com.qding.eyecloud.model.AuthUser
+	 * @throws
+	 * @since [产品/模块版本]
+	 * @author tanshen@qding.me
+	 * @version v1.0
+	 * Date:2019年12月27日 13:38
+	**/
 	AuthUser register(AuthUser authUser);
 
 	/**
@@ -60,5 +69,5 @@ public interface IAuthFacade {
 	 * Date:2019年11月29日 下午3:45:14
 	 */
 	UserDataVO getAuthPermissions(AuthUser authUser);
-	
+
 }

@@ -53,32 +53,32 @@ import io.jsonwebtoken.Claims;
  */
 @Service
 public class AuthFacadeProvider implements IAuthFacade {
-    
+
     @Autowired
     private IAuthUserDao iAuthUserDao;
-    
+
     @Autowired
     private IAuthMenuDao iAuthMenuDao;
-    
+
     @Autowired
     private IAuthMenuOperateDao iAuthMenuOperateDao;
-    
+
     @Autowired
     private IAuthUserRoleDao iAuthUserRoleDao;
-    
+
     @Autowired
     private IAuthRoleMenuDao iAuthRoleMenuDao;
-    
+
     @Override
     public AuthUser getAuthUser(AuthUser req, boolean checkPassWord, boolean createToken) {
-        
-        A.checkParams(req == null || StringUtils.isBlank(req.getAccount()), "入参错误");
-        
+
+        A.checkParams(Objects.isNull(req) || StringUtils.isBlank(req.getAccount()), "入参错误");
+
         AuthUser authUser =
             iAuthUserDao.getOne(Wrappers.<AuthUser> lambdaQuery().eq(AuthUser::getAccount, req.getAccount()));
-        
-        A.checkBusiness(authUser == null, Constants.COMMON_FAIL, "用户不存在");
-        
+
+        A.checkBusiness(Objects.isNull(authUser), Constants.COMMON_FAIL, "用户不存在");
+
         if (checkPassWord) {
             A.checkParams(StringUtils.isBlank(req.getPassword()), "密码不能为空");
             A.checkParams(
@@ -92,19 +92,39 @@ public class AuthFacadeProvider implements IAuthFacade {
         sensitiveUser(authUser);
         return authUser;
     }
-    
+
     @Override
     public void logout(String token) {
         // jwt - 没法销毁
     }
-    
+
+    /**
+     * 生成token
+     * 功能详细描述
+     * @param req
+     * @return String
+     * @since [产品/模块版本]
+     * @author tanshen@qding.me
+     * @version v1.0
+     * Date:2019年12月27日 12:05
+    **/
     @Override
     public String generateToken(AuthUser req) {
         A.checkParams(req == null || StringUtils.isAnyBlank(req.getAccount(), req.getId()), "入参错误");
         sensitiveUser(req);
         return JwtUtils.createToken(req.getId(), JsonUtil.writeValue(req), false);
     }
-    
+
+    /**
+     * 校验token并返回用户信息
+     * 功能详细描述
+     * @param token
+     * @return AuthUser
+     * @since [产品/模块版本]
+     * @author tanshen@qding.me
+     * @version v1.0
+     * Date:2019年12月27日 12:04
+    **/
     @Override
     public AuthUser checkAndGetAuthUser(String token) {
         Claims claims = JwtUtils.getTokenBody(token);
@@ -115,12 +135,31 @@ public class AuthFacadeProvider implements IAuthFacade {
         sensitiveUser(user);
         return user;
     }
-    
+
+    /**
+     * 过滤敏感信息
+     * 功能详细描述
+     * @param authUser
+     * @since [产品/模块版本]
+     * @author tanshen@qding.me
+     * @version v1.0
+     * Date:2019年12月27日 12:03
+    **/
     private void sensitiveUser(AuthUser authUser) {
         authUser.setPassword("*");
         authUser.setSalt("*");
     }
-    
+
+    /**
+     * 用户注册
+     * 功能详细描述
+     * @param req
+     * @return AuthUser
+     * @since [产品/模块版本]
+     * @author tanshen@qding.me
+     * @version v1.0
+     * Date:2019年12月27日 12:01
+    **/
     @Override
     public AuthUser register(AuthUser req) {
         A.checkParams(Objects.isNull(req) || StringUtils.isAnyBlank(req.getMobile(), req.getPassword()), "入参错误");
@@ -133,14 +172,24 @@ public class AuthFacadeProvider implements IAuthFacade {
         sensitiveUser(req);
         return req;
     }
-    
+
+    /**
+     * 获取用户的权限菜单
+     * 功能详细描述
+     * @param authUser
+     * @return UserDataVO
+     * @since [产品/模块版本]
+     * @author tanshen@qding.me
+     * @version v1.0
+     * Date:2019年12月27日 11:59
+    **/
     @Override
     public UserDataVO getAuthPermissions(AuthUser authUser) {
         UserDataVO userDataVO = new UserDataVO();
         AuthUserTypeEnum userType = AuthUserTypeEnum.getByCode(authUser.getAccountType());
         LambdaQueryWrapper<AuthUserRole> query = Wrappers.<AuthUserRole> lambdaQuery();
         Set<String> roleIds = null;
-        
+
         if (AuthUserTypeEnum.ADMIN.getType().equals(userType.getType())) {
             // 超级管理员拥有所有权限
         } else if (AuthUserTypeEnum.T_ADMIN.getType().equals(userType.getType())) {
@@ -156,7 +205,7 @@ public class AuthFacadeProvider implements IAuthFacade {
             query.eq(AuthUserRole::getUserId, authUser.getId());
             roleIds = iAuthUserRoleDao.list(query).stream().map(AuthUserRole::getRoleId).collect(Collectors.toSet());
         }
-        
+
         if (!AuthUserTypeEnum.ADMIN.getType().equals(userType.getType()) && CollectionUtils.isEmpty(roleIds)) {
             // 如果非管理员，且没有绑定角色，则认为该用户没有相关权限，直接返回
             return userDataVO;
@@ -187,5 +236,5 @@ public class AuthFacadeProvider implements IAuthFacade {
         userDataVO.setPermissions(TreeUtils.startForTree(menuList));
         return userDataVO;
     }
-    
+
 }
