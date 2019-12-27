@@ -101,7 +101,7 @@
 	<logger name="java.sql.PreparedStatement" additivity="false" level="DEBUG">
 		<appender-ref ref="ASYNC_LOG_DEBUG" />
 	</logger>
-	<logger name="com.qding.eyecloud" additivity="false" level="DEBUG">
+	<logger name="com.qding.eyecloud" level="DEBUG">
 		<appender-ref ref="ASYNC_LOG_INFO" />
 	</logger>
 </configuration>
