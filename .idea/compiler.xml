@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="eyecloud-search-common" />
+        <module name="eyecloud-auth-facade" />
+        <module name="eyecloud-util" />
+        <module name="eyecloud-dao" />
+        <module name="eyecloud-util-spring" />
+        <module name="eyecloud-domain" />
+        <module name="eyecloud-data-center-facade" />
+        <module name="eyecloud-common" />
+        <module name="eyecloud-video-facade" />
+        <module name="eyecloud-data-center-remote" />
+        <module name="eyecloud-auth-remote" />
+        <module name="eyecloud-search-facade" />
+        <module name="eyecloud-video-remote" />
+        <module name="eyecloud-web" />
+        <module name="eyecloud-search-remote" />
+        <module name="eyecloud-webflux" />
+        <module name="eyecloud-api" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="eyecloud" target="1.8" />
+      <module name="eyecloud-api" target="1.8" />
+      <module name="eyecloud-auth-facade" target="1.8" />
+      <module name="eyecloud-auth-remote" target="1.8" />
+      <module name="eyecloud-common" target="1.8" />
+      <module name="eyecloud-dao" target="1.8" />
+      <module name="eyecloud-data-center-facade" target="1.8" />
+      <module name="eyecloud-data-center-remote" target="1.8" />
+      <module name="eyecloud-domain" target="1.8" />
+      <module name="eyecloud-search-common" target="1.8" />
+      <module name="eyecloud-search-facade" target="1.8" />
+      <module name="eyecloud-search-remote" target="1.8" />
+      <module name="eyecloud-util" target="1.8" />
+      <module name="eyecloud-util-spring" target="1.8" />
+      <module name="eyecloud-video-facade" target="1.8" />
+      <module name="eyecloud-video-remote" target="1.8" />
+      <module name="eyecloud-web" target="1.8" />
+      <module name="eyecloud-webflux" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="eyecloud-api" options="-parameters" />
+      <module name="eyecloud-auth-facade" options="-parameters" />
+      <module name="eyecloud-auth-remote" options="-parameters" />
+      <module name="eyecloud-common" options="-parameters" />
+      <module name="eyecloud-dao" options="-parameters" />
+      <module name="eyecloud-data-center-facade" options="-parameters" />
+      <module name="eyecloud-data-center-remote" options="-parameters" />
+      <module name="eyecloud-domain" options="-parameters" />
+      <module name="eyecloud-search-common" options="-parameters" />
+      <module name="eyecloud-search-facade" options="-parameters" />
+      <module name="eyecloud-search-remote" options="-parameters" />
+      <module name="eyecloud-util" options="-parameters" />
+      <module name="eyecloud-util-spring" options="-parameters" />
+      <module name="eyecloud-video-facade" options="-parameters" />
+      <module name="eyecloud-video-remote" options="-parameters" />
+      <module name="eyecloud-web" options="-parameters" />
+      <module name="eyecloud-webflux" options="-parameters" />
+    </option>
+  </component>
+</project>

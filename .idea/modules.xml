@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/eyecloud.iml" filepath="$PROJECT_DIR$/eyecloud.iml" />
+      <module fileurl="file://$PROJECT_DIR$/eyecloud-api/eyecloud-api.iml" filepath="$PROJECT_DIR$/eyecloud-api/eyecloud-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/eyecloud-auth-facade/eyecloud-auth-facade.iml" filepath="$PROJECT_DIR$/eyecloud-auth-facade/eyecloud-auth-facade.iml" />
+      <module fileurl="file://$PROJECT_DIR$/eyecloud-auth-remote/eyecloud-auth-remote.iml" filepath="$PROJECT_DIR$/eyecloud-auth-remote/eyecloud-auth-remote.iml" />
+      <module fileurl="file://$PROJECT_DIR$/eyecloud-common/eyecloud-common.iml" filepath="$PROJECT_DIR$/eyecloud-common/eyecloud-common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/eyecloud-dao/eyecloud-dao.iml" filepath="$PROJECT_DIR$/eyecloud-dao/eyecloud-dao.iml" />
+      <module fileurl="file://$PROJECT_DIR$/eyecloud-data-center-facade/eyecloud-data-center-facade.iml" filepath="$PROJECT_DIR$/eyecloud-data-center-facade/eyecloud-data-center-facade.iml" />
+      <module fileurl="file://$PROJECT_DIR$/eyecloud-data-center-remote/eyecloud-data-center-remote.iml" filepath="$PROJECT_DIR$/eyecloud-data-center-remote/eyecloud-data-center-remote.iml" />
+      <module fileurl="file://$PROJECT_DIR$/eyecloud-domain/eyecloud-domain.iml" filepath="$PROJECT_DIR$/eyecloud-domain/eyecloud-domain.iml" />
+      <module fileurl="file://$PROJECT_DIR$/eyecloud-search-common/eyecloud-search-common.iml" filepath="$PROJECT_DIR$/eyecloud-search-common/eyecloud-search-common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/eyecloud-search-facade/eyecloud-search-facade.iml" filepath="$PROJECT_DIR$/eyecloud-search-facade/eyecloud-search-facade.iml" />
+      <module fileurl="file://$PROJECT_DIR$/eyecloud-search-remote/eyecloud-search-remote.iml" filepath="$PROJECT_DIR$/eyecloud-search-remote/eyecloud-search-remote.iml" />
+      <module fileurl="file://$PROJECT_DIR$/eyecloud-util/eyecloud-util.iml" filepath="$PROJECT_DIR$/eyecloud-util/eyecloud-util.iml" />
+      <module fileurl="file://$PROJECT_DIR$/eyecloud-util-spring/eyecloud-util-spring.iml" filepath="$PROJECT_DIR$/eyecloud-util-spring/eyecloud-util-spring.iml" />
+      <module fileurl="file://$PROJECT_DIR$/eyecloud-video-facade/eyecloud-video-facade.iml" filepath="$PROJECT_DIR$/eyecloud-video-facade/eyecloud-video-facade.iml" />
+      <module fileurl="file://$PROJECT_DIR$/eyecloud-video-remote/eyecloud-video-remote.iml" filepath="$PROJECT_DIR$/eyecloud-video-remote/eyecloud-video-remote.iml" />
+      <module fileurl="file://$PROJECT_DIR$/eyecloud-web/eyecloud-web.iml" filepath="$PROJECT_DIR$/eyecloud-web/eyecloud-web.iml" />
+      <module fileurl="file://$PROJECT_DIR$/eyecloud-webflux/eyecloud-webflux.iml" filepath="$PROJECT_DIR$/eyecloud-webflux/eyecloud-webflux.iml" />
+    </modules>
+  </component>
+</project>
