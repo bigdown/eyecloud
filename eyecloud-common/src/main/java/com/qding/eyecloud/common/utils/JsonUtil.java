@@ -7,7 +7,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import com.qding.eyecloud.common.constants.Constants;
+import com.qding.eyecloud.common.constants.EyecloudConstants;
 import com.qding.eyecloud.common.exception.CommonException;
 
 /**
@@ -37,7 +37,7 @@ public class JsonUtil {
 			return OBJECT_MAPPER.writeValueAsString(obj);
 		} catch (JsonProcessingException e) {
 		}
-		throw new CommonException(Constants.COMMON_FAIL, "业务参数错误");
+		throw new CommonException(EyecloudConstants.COMMON_FAIL, "业务参数错误");
 	}
 
 	public static <T> T readValue(String s, TypeReference<T> ref) {
@@ -45,6 +45,6 @@ public class JsonUtil {
 			return OBJECT_MAPPER.readValue(s, ref);
 		} catch (Exception e) {
 		}
-		throw new CommonException(Constants.COMMON_FAIL, "业务参数错误");
+		throw new CommonException(EyecloudConstants.COMMON_FAIL, "业务参数错误");
 	}
 }

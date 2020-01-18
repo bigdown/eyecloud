@@ -13,11 +13,11 @@ public class AuthHandler {
 
 	public Mono<ServerResponse> helloXttblog(ServerRequest request) {
 		return ServerResponse.ok().contentType(MediaType.TEXT_PLAIN)
-				.body(BodyInserters.fromObject("Hello, www.xttblog.com !"));
+				.body(BodyInserters.fromValue("Hello, www.xttblog.com !"));
 
 	}
 
 	public Mono<ServerResponse> helloFlux(ServerRequest request) {
-		return ServerResponse.ok().contentType(MediaType.APPLICATION_JSON_UTF8).body(BodyInserters.fromObject("Hello"));
+		return ServerResponse.ok().contentType(MediaType.APPLICATION_JSON).body(BodyInserters.fromValue("Hello"));
 	}
 }

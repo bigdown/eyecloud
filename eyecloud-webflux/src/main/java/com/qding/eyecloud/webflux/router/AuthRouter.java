@@ -19,4 +19,11 @@ public class AuthRouter {
 				RequestPredicates.GET("/hello").and(RequestPredicates.accept(MediaType.TEXT_PLAIN)),
 				handler::helloXttblog);
 	}
+
+	@Bean
+	public RouterFunction<ServerResponse> helloFlux(AuthHandler handler) {
+		return RouterFunctions.route(
+				RequestPredicates.GET("/helloFlux").and(RequestPredicates.accept(MediaType.TEXT_PLAIN)),
+				handler::helloFlux);
+	}
 }

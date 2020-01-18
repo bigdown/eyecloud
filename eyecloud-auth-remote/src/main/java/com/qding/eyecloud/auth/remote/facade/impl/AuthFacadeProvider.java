@@ -19,7 +19,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.qding.eyecloud.auth.remote.facade.IAuthFacade;
 import com.qding.eyecloud.auth.remote.utils.JwtUtils;
 import com.qding.eyecloud.auth.remote.utils.MapUtils;
-import com.qding.eyecloud.common.constants.Constants;
+import com.qding.eyecloud.common.constants.EyecloudConstants;
 import com.qding.eyecloud.common.data.response.auth.AuthMenuVO;
 import com.qding.eyecloud.common.data.response.auth.AuthOperateVO;
 import com.qding.eyecloud.common.data.response.auth.UserDataVO;
@@ -77,7 +77,7 @@ public class AuthFacadeProvider implements IAuthFacade {
         AuthUser authUser =
             iAuthUserDao.getOne(Wrappers.<AuthUser> lambdaQuery().eq(AuthUser::getAccount, req.getAccount()));
 
-        A.checkBusiness(Objects.isNull(authUser), Constants.COMMON_FAIL, "用户不存在");
+        A.checkBusiness(Objects.isNull(authUser), EyecloudConstants.COMMON_FAIL, "用户不存在");
 
         if (checkPassWord) {
             A.checkParams(StringUtils.isBlank(req.getPassword()), "密码不能为空");
@@ -131,7 +131,7 @@ public class AuthFacadeProvider implements IAuthFacade {
         String subject = claims.getSubject();
         AuthUser user = JsonUtil.readValue(subject, new TypeReference<AuthUser>() {
         });
-        A.checkBusiness(user == null, Constants.COMMON_FAIL, "token校验失败");
+        A.checkBusiness(user == null, EyecloudConstants.COMMON_FAIL, "token校验失败");
         sensitiveUser(user);
         return user;
     }

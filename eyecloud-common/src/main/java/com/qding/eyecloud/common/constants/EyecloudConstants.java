@@ -8,7 +8,7 @@ package com.qding.eyecloud.common.constants;
  * @version v1.0
  * @Date: 2019年11月28日
  */
-public class Constants {
+public class EyecloudConstants {
 
 	public static final String TRACE_ID = "traceId";
 
@@ -24,5 +24,5 @@ public class Constants {
     public static final String STREAM_STATUS = "stream_status";
     
     public static final String DEVICE_STATUS = "device_status";
-	
+
 }

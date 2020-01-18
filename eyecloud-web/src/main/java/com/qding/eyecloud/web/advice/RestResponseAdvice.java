@@ -9,7 +9,7 @@ import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 
-import com.qding.eyecloud.common.constants.Constants;
+import com.qding.eyecloud.common.constants.EyecloudConstants;
 import com.qding.eyecloud.common.data.base.RestResponse;
 
 @ControllerAdvice
@@ -26,7 +26,7 @@ public class RestResponseAdvice implements ResponseBodyAdvice<Object> {
 			ServerHttpResponse response) {
 		if(body instanceof RestResponse<?>) {
 			RestResponse<?> restResponse = (RestResponse<?>) body;
-			restResponse.setRequestId(MDC.get(Constants.TRACE_ID));
+			restResponse.setRequestId(MDC.get(EyecloudConstants.TRACE_ID));
 			return restResponse;
 		}
 		return body;

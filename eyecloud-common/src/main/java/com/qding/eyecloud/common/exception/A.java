@@ -1,6 +1,6 @@
 package com.qding.eyecloud.common.exception;
 
-import com.qding.eyecloud.common.constants.Constants;
+import com.qding.eyecloud.common.constants.EyecloudConstants;
 
 /**
  * Desc: 检查并抛出异常封装工具类
@@ -32,7 +32,7 @@ public class A {
     
     public static void checkBusiness(boolean result, String msg) {
         if (result) {
-            throw new BusinessException(Constants.COMMON_FAIL, msg);
+            throw new BusinessException(EyecloudConstants.COMMON_FAIL, msg);
         }
     }
 }

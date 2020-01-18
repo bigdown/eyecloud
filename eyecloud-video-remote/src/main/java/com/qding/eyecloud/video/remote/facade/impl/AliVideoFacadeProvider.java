@@ -5,28 +5,18 @@ import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.aliyuncs.vs.model.v20181212.*;
+import com.qding.eyecloud.video.remote.utils.AliyunVideoDeviceUtil;
+import com.qding.eyecloud.video.remote.utils.AliyunVideoStreamUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.CollectionUtils;
 
 import com.alibaba.dubbo.config.annotation.Service;
 import com.aliyuncs.profile.DefaultProfile;
-import com.aliyuncs.vs.model.v20181212.BatchDeleteDevicesRequest;
-import com.aliyuncs.vs.model.v20181212.BatchDeleteDevicesResponse;
-import com.aliyuncs.vs.model.v20181212.BatchStopDevicesRequest;
-import com.aliyuncs.vs.model.v20181212.BatchStopDevicesResponse;
-import com.aliyuncs.vs.model.v20181212.CreateDeviceRequest;
-import com.aliyuncs.vs.model.v20181212.CreateDeviceResponse;
-import com.aliyuncs.vs.model.v20181212.DescribeDeviceChannelsResponse;
 import com.aliyuncs.vs.model.v20181212.DescribeDeviceChannelsResponse.Channel;
-import com.aliyuncs.vs.model.v20181212.DescribeStreamURLRequest;
-import com.aliyuncs.vs.model.v20181212.DescribeStreamURLResponse;
-import com.aliyuncs.vs.model.v20181212.ModifyDeviceRequest;
-import com.aliyuncs.vs.model.v20181212.ModifyDeviceResponse;
-import com.aliyuncs.vs.model.v20181212.StartDeviceRequest;
-import com.aliyuncs.vs.model.v20181212.StopDeviceRequest;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.qding.eyecloud.common.constants.Constants;
+import com.qding.eyecloud.common.constants.EyecloudConstants;
 import com.qding.eyecloud.common.data.base.BaseRequest;
 import com.qding.eyecloud.common.data.request.video.VideoCallbackRequest;
 import com.qding.eyecloud.common.data.response.video.VideoPreviewVO;
@@ -41,8 +31,6 @@ import com.qding.eyecloud.model.VideoDevice;
 import com.qding.eyecloud.model.VideoDeviceChannel;
 import com.qding.eyecloud.model.VideoGroup;
 import com.qding.eyecloud.video.facade.IAliVideoFacade;
-import com.qding.eyecloud.video.remote.utils.AliyunVideoDeviceUtil;
-import com.qding.eyecloud.video.remote.utils.AliyunVideoStreamUtil;
 
 /**
  * Desc: video dubbo服务提供者
@@ -63,9 +51,6 @@ public class AliVideoFacadeProvider implements IAliVideoFacade {
 
     @Autowired
     private IVideoDeviceChannelDao iVideoDeviceChannelDao;
-
-    public static DefaultProfile PROFILE =
-        DefaultProfile.getProfile("cn-shanghai", "LTAI4Ffew9GwqygMKApVfRDe", "c4zIVTu6NOeUvKdRDNnpcSRXyc5sgE");
 
     @Override
     public String manageVideo(VideoDevice request) {
@@ -114,7 +99,7 @@ public class AliVideoFacadeProvider implements IAliVideoFacade {
         entity.setDeviceDisable(CommonDisableEnum.DIS_ABLED.getCode());
         entity.setDeviceStatus(VideoDeviceEnum.WAIT_SYNC.getCode());
         iVideoDeviceDao.updateById(entity);
-        return Constants.COMMON_SUCCESS;
+        return EyecloudConstants.COMMON_SUCCESS;
     }
 
     @Override
@@ -129,7 +114,7 @@ public class AliVideoFacadeProvider implements IAliVideoFacade {
         describeStreamURLRequest.setStartTime(request.getStartTime());
         describeStreamURLRequest.setEndTime(request.getEndTime());
         describeStreamURLRequest.setTranscode(request.getTranscode());
-        DescribeStreamURLResponse response = AliyunVideoStreamUtil.describeStreamUrl(PROFILE, describeStreamURLRequest);
+        DescribeStreamURLResponse response = AliyunVideoStreamUtil.describeStreamUrl(describeStreamURLRequest);
         if (response != null) {
             previewUrl = response.getUrl();
         }
@@ -140,7 +125,7 @@ public class AliVideoFacadeProvider implements IAliVideoFacade {
     public String syncDevice(BaseRequest request) {
         A.checkParams(request == null);
         syncDeviceCore(request);
-        return Constants.COMMON_SUCCESS;
+        return EyecloudConstants.COMMON_SUCCESS;
     }
 
     @Override
@@ -151,14 +136,12 @@ public class AliVideoFacadeProvider implements IAliVideoFacade {
         A.checkBusiness(videoDevice == null, "设备不存在");
         A.checkBusiness(StringUtils.isBlank(videoDevice.getDeviceId()), "设备还未同步，暂不支持该操作");
 
-        StartDeviceRequest startDeviceRequest = new StartDeviceRequest();
-        startDeviceRequest.setId(videoDevice.getDeviceId());
         // 开启某个设备
-        AliyunVideoDeviceUtil.startDevice(PROFILE, startDeviceRequest);
+        AliyunVideoDeviceUtil.startDevice(videoDevice.getDeviceId());
 
         // 同步通道
         syncDeviceChannels(request);
-        return Constants.COMMON_SUCCESS;
+        return EyecloudConstants.COMMON_SUCCESS;
     }
 
     @Override
@@ -169,7 +152,7 @@ public class AliVideoFacadeProvider implements IAliVideoFacade {
             A.checkBusiness(videoDevice == null, "设备不存在");
             StopDeviceRequest stopDeviceRequest = new StopDeviceRequest();
             stopDeviceRequest.setId(request.getId());
-            AliyunVideoDeviceUtil.stopDevice(PROFILE, stopDeviceRequest);
+            AliyunVideoDeviceUtil.stopDevice(stopDeviceRequest);
         } else {
             List<VideoDevice> videoDevices = iVideoDeviceDao.list(Wrappers.<VideoDevice> lambdaQuery()
                 .eq(StringUtils.isNotBlank(request.getProjectId()), VideoDevice::getProjectId, request.getProjectId())
@@ -178,9 +161,9 @@ public class AliVideoFacadeProvider implements IAliVideoFacade {
             List<String> list = videoDevices.stream().map(item -> item.getDeviceId()).collect(Collectors.toList());
             batchStopDevicesRequest.setId(StringUtils.join(list, ","));
             // 批量stop
-            AliyunVideoDeviceUtil.batchStopDevices(PROFILE, batchStopDevicesRequest);
+            AliyunVideoDeviceUtil.batchStopDevices(batchStopDevicesRequest);
         }
-        return Constants.COMMON_SUCCESS;
+        return EyecloudConstants.COMMON_SUCCESS;
     }
 
     @Override
@@ -188,8 +171,8 @@ public class AliVideoFacadeProvider implements IAliVideoFacade {
         A.checkParams(request == null || StringUtils.isBlank(request.getId()));
         VideoDevice videoDevice = iVideoDeviceDao.getById(request.getId());
         A.checkBusiness(videoDevice == null, "设备不存在");
-        AliyunVideoDeviceUtil.unlockDevice(PROFILE, request.getId());
-        return Constants.COMMON_SUCCESS;
+        AliyunVideoDeviceUtil.unlockDevice(request.getId());
+        return EyecloudConstants.COMMON_SUCCESS;
     }
 
     @Override
@@ -198,9 +181,11 @@ public class AliVideoFacadeProvider implements IAliVideoFacade {
         VideoDevice videoDevice = iVideoDeviceDao.getById(request.getId());
         A.checkBusiness(videoDevice == null, "设备不存在");
 
+        DescribeDeviceChannelsRequest describeDeviceChannelsRequest = new DescribeDeviceChannelsRequest();
+        describeDeviceChannelsRequest.setId(request.getId());
         // 获取设备通道信息
         DescribeDeviceChannelsResponse response =
-            AliyunVideoDeviceUtil.describeDeviceChannels(PROFILE, request.getId());
+            AliyunVideoDeviceUtil.describeDeviceChannels(describeDeviceChannelsRequest);
 
         if (response != null && !CollectionUtils.isEmpty(response.getChannels())) {
             // 先删除之前的通道信息
@@ -222,13 +207,13 @@ public class AliVideoFacadeProvider implements IAliVideoFacade {
             }
             iVideoDeviceChannelDao.saveBatch(entityList);
         }
-        return Constants.COMMON_SUCCESS;
+        return EyecloudConstants.COMMON_SUCCESS;
     }
 
     @Override
     public String deviceHeartBeat(VideoCallbackRequest request) {
         // 设备消息（改变设备上线下线状态）
-        if (Constants.DEVICE_STATUS.equals(request.getEvent())) {
+        if (EyecloudConstants.DEVICE_STATUS.equals(request.getEvent())) {
             // 更新设备上下线状态
             if (StringUtils.isNotBlank(request.getDeviceStatus())) {
                 VideoDevice entity = new VideoDevice();
@@ -240,7 +225,7 @@ public class AliVideoFacadeProvider implements IAliVideoFacade {
             }
         }
         // 流消息
-        else if (Constants.STREAM_STATUS.equals(request.getEvent())) {
+        else if (EyecloudConstants.STREAM_STATUS.equals(request.getEvent())) {
             // 保存流id
             if (StringUtils.isNoneBlank(request.getStreamId(), request.getStreamStatus())) {
                 VideoDevice entity = new VideoDevice();
@@ -252,7 +237,7 @@ public class AliVideoFacadeProvider implements IAliVideoFacade {
                         .eq(VideoDevice::getGroupId, request.getGroupId()));
             }
         }
-        return Constants.COMMON_SUCCESS;
+        return EyecloudConstants.COMMON_SUCCESS;
     }
 
     @Override
@@ -260,7 +245,7 @@ public class AliVideoFacadeProvider implements IAliVideoFacade {
         A.checkParams(request == null || StringUtils.isBlank(request.getId()));
         VideoDevice videoDevice = iVideoDeviceDao.getById(request.getId());
         A.checkBusiness(videoDevice == null, "设备不存在");
-        String url = AliyunVideoDeviceUtil.createStreamSnapshot(PROFILE, videoDevice.getDeviceStreamId());
+        String url = AliyunVideoStreamUtil.createStreamSnapshot(videoDevice.getDeviceStreamId());
         return url;
     }
 
@@ -363,12 +348,12 @@ public class AliVideoFacadeProvider implements IAliVideoFacade {
         String ids = StringUtils.join(remoteDeleteIds.toArray(), ",");
         BatchStopDevicesRequest batchStopDevicesRequest = new BatchStopDevicesRequest();
         batchStopDevicesRequest.setId(ids);
-        BatchStopDevicesResponse stopResult = AliyunVideoDeviceUtil.batchStopDevices(PROFILE, batchStopDevicesRequest);
+        BatchStopDevicesResponse stopResult = AliyunVideoDeviceUtil.batchStopDevices(batchStopDevicesRequest);
         if (stopResult != null) {
             BatchDeleteDevicesRequest batchDeleteDevicesRequest = new BatchDeleteDevicesRequest();
             batchDeleteDevicesRequest.setId(ids);
             BatchDeleteDevicesResponse removeResult =
-                AliyunVideoDeviceUtil.batchDeleteDevices(PROFILE, batchDeleteDevicesRequest);
+                AliyunVideoDeviceUtil.batchDeleteDevices(batchDeleteDevicesRequest);
             VideoDevice entity = new VideoDevice();
             entity.setDeviceStatus(VideoDeviceEnum.SYNCING.getCode());
             if (removeResult != null) {
@@ -403,7 +388,7 @@ public class AliVideoFacadeProvider implements IAliVideoFacade {
                 modifyDeviceRequest.setUsername(videoDevice.getUsername());
                 modifyDeviceRequest.setPassword(videoDevice.getPassword());
                 modifyDeviceRequest.setVendor(videoDevice.getVendor());
-                ModifyDeviceResponse modifyResult = AliyunVideoDeviceUtil.modifyDevice(PROFILE, modifyDeviceRequest);
+                ModifyDeviceResponse modifyResult = AliyunVideoDeviceUtil.modifyDevice(modifyDeviceRequest);
                 if (modifyResult != null) {
                     videoDevice.setDeviceStatus(VideoDeviceEnum.SYNCED.getCode());
                 }
@@ -438,7 +423,7 @@ public class AliVideoFacadeProvider implements IAliVideoFacade {
                 createDeviceRequest.setUsername(videoDevice.getUsername());
                 createDeviceRequest.setPassword(videoDevice.getPassword());
                 createDeviceRequest.setVendor(videoDevice.getVendor());
-                CreateDeviceResponse addResult = AliyunVideoDeviceUtil.createDevice(PROFILE, createDeviceRequest);
+                CreateDeviceResponse addResult = AliyunVideoDeviceUtil.createDevice(createDeviceRequest);
                 if (addResult != null) {
                     videoDevice.setDeviceId(addResult.getId());
                     videoDevice.setDeviceStatus(VideoDeviceEnum.SYNCED.getCode());

@@ -7,7 +7,7 @@ import org.slf4j.MDC;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.qding.eyecloud.common.constants.Constants;
+import com.qding.eyecloud.common.constants.EyecloudConstants;
 import com.qding.eyecloud.common.utils.SnowFlake;
 import com.qding.eyecloud.common.utils.TraceIdUtils;
 
@@ -18,7 +18,7 @@ public class TraceIdInterceptor implements HandlerInterceptor {
 			throws Exception {
 		String traceId = "req" + SnowFlake.createSnowFlake().nextIdString();
 		TraceIdUtils.setTraceId(traceId);
-		MDC.put(Constants.TRACE_ID, traceId);
+		MDC.put(EyecloudConstants.TRACE_ID, traceId);
 		return true;
 	}
 
@@ -31,7 +31,7 @@ public class TraceIdInterceptor implements HandlerInterceptor {
 	public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex)
 			throws Exception {
 		TraceIdUtils.clear();
-		MDC.remove(Constants.TRACE_ID);
+		MDC.remove(EyecloudConstants.TRACE_ID);
 		HandlerInterceptor.super.afterCompletion(request, response, handler, ex);
 	}
 

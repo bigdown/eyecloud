@@ -1,5 +1,6 @@
 package com.qding.eyecloud.common.log.filter;
 
+import com.qding.eyecloud.common.constants.EyecloudConstants;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,7 +35,7 @@ public class TraceLogFilter implements Filter {
         throws RpcException {
         Long startTime = System.currentTimeMillis();
         RpcContext rpcContext = RpcContext.getContext();
-        String traceId = rpcContext.getAttachment(com.qding.eyecloud.common.constants.Constants.TRACE_ID);
+        String traceId = rpcContext.getAttachment(EyecloudConstants.TRACE_ID);
         if (StringUtils.isNotBlank(traceId)) {
             // 从RpcContext里获取traceId并保存
             TraceIdUtils.setTraceId(traceId);
@@ -46,9 +47,9 @@ public class TraceLogFilter implements Filter {
             if (StringUtils.isBlank(traceId)) {
                 traceId = "dubbo:" + SnowFlake.createSnowFlake().nextIdString();
             }
-            RpcContext.getContext().setAttachment(com.qding.eyecloud.common.constants.Constants.TRACE_ID, traceId);
+            RpcContext.getContext().setAttachment(EyecloudConstants.TRACE_ID, traceId);
         }
-        MDC.put(com.qding.eyecloud.common.constants.Constants.TRACE_ID, traceId);
+        MDC.put(EyecloudConstants.TRACE_ID, traceId);
         
         Object[] args = invocation.getArguments();
         String methodName = invoker.getInterface().getSimpleName() + "." + invocation.getMethodName();
@@ -81,7 +82,7 @@ public class TraceLogFilter implements Filter {
         }
         
         if (rpcContext.isProviderSide()) {
-            MDC.remove(com.qding.eyecloud.common.constants.Constants.TRACE_ID);
+            MDC.remove(EyecloudConstants.TRACE_ID);
         }
         return result;
     }

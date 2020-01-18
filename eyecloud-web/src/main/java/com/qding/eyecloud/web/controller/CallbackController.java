@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.alibaba.fastjson.JSONObject;
-import com.qding.eyecloud.common.constants.Constants;
+import com.qding.eyecloud.common.constants.EyecloudConstants;
 import com.qding.eyecloud.common.data.base.RestResponse;
 import com.qding.eyecloud.common.data.request.crm.WorkOrderCallbackRequest;
 import com.qding.eyecloud.common.data.request.video.VideoCallbackRequest;
@@ -47,7 +47,7 @@ public class CallbackController {
         jsonObj.put("streamStatus", videoCallbackRequest.getStreamStatus());
         jsonObj.put("time", videoCallbackRequest.getTime());
         String flag = rpcFacade.iAliVideoFacade.deviceHeartBeat(videoCallbackRequest);
-        if (!Constants.COMMON_SUCCESS.equals(flag)) {
+        if (!EyecloudConstants.COMMON_SUCCESS.equals(flag)) {
             // 写入mq不成功返回非200错误码，阿里云那边会再次推送
             httpServletResponse.setStatus(500);
         }
