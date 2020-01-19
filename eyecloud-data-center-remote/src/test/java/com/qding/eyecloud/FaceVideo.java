@@ -29,7 +29,7 @@ public class FaceVideo {
     static {
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
         System.out.println("Welcome to OpenCV " + Core.VERSION);
-        faceDetector = new CascadeClassifier("E:\\soft\\opencv\\opencv\\sources\\data\\haarcascades\\haarcascade_frontalface_alt.xml");
+        faceDetector = new CascadeClassifier("D:\\Program Files\\opencv\\sources\\data\\haarcascades\\haarcascade_frontalface_alt.xml");
     }
 
     public static void main(String[] args) {
@@ -144,8 +144,7 @@ public class FaceVideo {
             }
             i++;
             if(i==3) {// 获取匹配成功第10次的照片
-                Imgcodecs.imwri
-            te("E:\\facevideo\\" + "face.png", image);
+                Imgcodecs.imwrite("E:\\facevideo\\" + "face.png", image);
             }
         }
         return image;
