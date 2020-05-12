@@ -79,7 +79,6 @@
 		<appender-ref ref="FILE_INFO" />
 	</appender>
 
-	<!-- 日志的记录级别 -->
 	<!-- 在定义后引用APPENDER -->
 	<root level="INFO">
 		<!-- 控制台 -->

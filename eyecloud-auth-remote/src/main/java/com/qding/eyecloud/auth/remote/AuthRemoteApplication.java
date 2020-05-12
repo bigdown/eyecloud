@@ -32,6 +32,7 @@ public class AuthRemoteApplication {
 
     private static CountDownLatch countDownLatch = new CountDownLatch(1);
 
+
     public static void main(String[] args) {
         SpringApplication springApplication = new SpringApplication(AuthRemoteApplication.class);
         springApplication.setWebApplicationType(WebApplicationType.NONE);

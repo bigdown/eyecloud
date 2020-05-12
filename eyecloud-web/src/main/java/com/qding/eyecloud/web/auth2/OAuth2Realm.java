@@ -26,18 +26,19 @@ import com.qding.eyecloud.web.facade.RpcFacade;
 import com.qding.eyecloud.web.utils.SpringContextUtils;
 
 public class OAuth2Realm extends AuthorizingRealm {
-    
+
     public OAuth2Realm() {
     }
-    
+
     @Override
     public boolean supports(AuthenticationToken token) {
         return token instanceof OAuth2Token;
     }
-    
+
     /**
      * Desc:授权
      * Info:<功能详细描述>
+     *
      * @param principals
      * @return
      * @author tanshen@qding.me
@@ -45,24 +46,24 @@ public class OAuth2Realm extends AuthorizingRealm {
      */
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
-        AuthUser authUser = (AuthUser)principals.getPrimaryPrincipal();
+        AuthUser authUser = (AuthUser) principals.getPrimaryPrincipal();
         if (authUser == null) {
             throw new RuntimeException();
         }
         // 如果是管理员，则认为有所有权限
         UserDataVO userDataVO =
-            ((RpcFacade)SpringContextUtils.getBean("rpcFacade")).iAuthFacade.getAuthPermissions(authUser);
+                ((RpcFacade) SpringContextUtils.getBean("rpcFacade")).iAuthFacade.getAuthPermissions(authUser.getId(), authUser.getTenantId(), authUser.getAccountType());
         // 用户权限列表
         Set<String> permsSet = new HashSet<>();
         if (userDataVO != null && !CollectionUtils.isEmpty(userDataVO.getPermissions())) {
             for (TreeVO<? extends BaseTreeModel> item : userDataVO.getPermissions()) {
-                AuthMenuVO authMenuVO = (AuthMenuVO)item.getData();
+                AuthMenuVO authMenuVO = (AuthMenuVO) item.getData();
                 List<AuthOperateVO> operates = authMenuVO.getOperates();
                 if (CollectionUtils.isEmpty(operates)) {
                     continue;
                 }
                 Set<String> itemSet =
-                    operates.stream().map(operate -> operate.getOperateCode()).collect(Collectors.toSet());
+                        operates.stream().map(operate -> operate.getOperateCode()).collect(Collectors.toSet());
                 permsSet.addAll(itemSet);
             }
         }
@@ -70,10 +71,11 @@ public class OAuth2Realm extends AuthorizingRealm {
         info.setStringPermissions(permsSet);
         return info;
     }
-    
+
     /**
      * Desc:认证
      * Info:<功能详细描述>
+     *
      * @param authenticationToken
      * @return
      * @throws AuthenticationException
@@ -82,15 +84,15 @@ public class OAuth2Realm extends AuthorizingRealm {
      */
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken)
-        throws AuthenticationException {
-        String token = (String)authenticationToken.getPrincipal();
+            throws AuthenticationException {
+        String token = (String) authenticationToken.getPrincipal();
         // 根据token查询用户信息
-        AuthUser user = ((RpcFacade)SpringContextUtils.getBean("rpcFacade")).iAuthFacade.checkAndGetAuthUser(token);
+        AuthUser user = ((RpcFacade) SpringContextUtils.getBean("rpcFacade")).iAuthFacade.checkAndGetAuthUser(token);
         if (user == null) {
             throw new UnauthorizedException("账号或密码不正确");
         }
         SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(user, token, getName());
         return info;
     }
-    
+
 }

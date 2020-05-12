@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
  * </p>
  *
  * @author CodeGenerator
- * @since 2019-11-26
+ * @since 2020-03-06
  */
 @Service
 public class AuthRoleMenuDaoImpl extends ServiceImpl<AuthRoleMenuMapper, AuthRoleMenu> implements IAuthRoleMenuDao {

@@ -77,7 +77,7 @@ public class TreeUtils {
         List<AuthMenu> reqList = new ArrayList<AuthMenu>();
         AuthMenu a1 = new AuthMenu();
         a1.setId("1");
-        a1.setParentId("-1");
+        a1.setParentMenuId("-1");
         a1.setMenuCode("123");
         a1.setMenuName("123");
         reqList.add(a1);
@@ -85,19 +85,19 @@ public class TreeUtils {
         AuthMenu a2 = new AuthMenu();
         BeanUtils.copyProperties(a1, a2);
         a2.setId("2");
-        a2.setParentId("1");
+        a2.setParentMenuId("1");
         reqList.add(a2);
         
         AuthMenu a3 = new AuthMenu();
         BeanUtils.copyProperties(a1, a3);
         a3.setId("3");
-        a3.setParentId("2");
+        a3.setParentMenuId("2");
         reqList.add(a3);
         
         AuthMenu a4 = new AuthMenu();
         BeanUtils.copyProperties(a1, a4);
         a4.setId("4");
-        a4.setParentId("2");
+        a4.setParentMenuId("2");
         reqList.add(a4);
         
         System.out.println(JsonUtil.writeValue(startForTree(reqList)));

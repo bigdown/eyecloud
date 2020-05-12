@@ -2,6 +2,7 @@ drop table if exists qdh_auth_user;
 create table qdh_auth_user
 (
    id                   varchar(64) NOT NULL primary key comment '主键id',
+   tenant_id            varchar(64) NOT NULL COMMENT '租户id',
    account              varchar(64) NOT NULL comment '用户账号',
    mobile               varchar(20) NOT NULL default '' comment '手机号',
    email                varchar(64) NOT NULL default '' comment '邮箱',
@@ -59,6 +60,19 @@ create table qdh_auth_project
    `update_time`         timestamp not null default CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP comment '修改时间'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 comment 'qdh_项目表';
 
+drop table if exists qdh_auth_user_project;
+create table qdh_auth_user_project
+(
+   id                   varchar(64) NOT NULL primary key comment '主键id',
+   tenant_id            varchar(64) NOT NULL comment '租户id',
+   user_id              varchar(64) NOT NULL comment '用户id',
+   project_id           varchar(64) NOT NULL comment '项目id',
+   `creator`            varchar(64) comment '创建人',
+   `create_time`        timestamp not null default CURRENT_TIMESTAMP comment '创建时间',
+   `updator`            varchar(64) comment '修改人',
+   `update_time`        timestamp not null default CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP comment '修改时间'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 comment 'qdh_用户项目表';
+
 drop table if exists qdh_auth_role;
 create table qdh_auth_role
 (
@@ -111,6 +125,8 @@ drop table if exists qdh_auth_role_menu;
 create table qdh_auth_role_menu
 (
    id                   varchar(64) NOT NULL primary key comment '主键id',
+   tenant_id            varchar(64) NOT NULL comment '租户id',
+   project_id           varchar(64) NOT NULL comment '项目id',
    role_id              varchar(64) NOT NULL comment '角色id',
    menu_id              varchar(64) NOT NULL comment '菜单id',
    `creator`            varchar(64) comment '创建人',
@@ -124,6 +140,8 @@ drop table if exists qdh_auth_menu_operate;
 create table qdh_auth_menu_operate
 (
    id                   varchar(64) NOT NULL primary key comment '主键id',
+   tenant_id            varchar(64) NOT NULL comment '租户id',
+   project_id           varchar(64) NOT NULL comment '项目id',
    menu_id              varchar(64) NOT NULL comment '菜单id',
    operate_name         varchar(64) NOT NULL comment '操作名称',
    operate_code         varchar(64) NOT NULL comment '操作code',

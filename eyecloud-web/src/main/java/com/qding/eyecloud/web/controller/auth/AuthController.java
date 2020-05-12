@@ -7,6 +7,7 @@ import javax.imageio.ImageIO;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 
+import com.qding.eyecloud.common.data.response.auth.AuthUserVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -56,7 +57,7 @@ public class AuthController {
      */
     @PostMapping(value = "/auth/login")
     @ResponseBody
-    public RestResponse<AuthUser> login(@RequestParam(name = "username") String username,
+    public RestResponse<AuthUserVO> login(@RequestParam(name = "username") String username,
         @RequestParam(name = "password") String password, @RequestParam String captcha) {
         // String kaptcha = ShiroUtils.getKaptcha(Constants.KAPTCHA_SESSION_KEY);
         // if (!captcha.equalsIgnoreCase(kaptcha)) {
@@ -66,7 +67,7 @@ public class AuthController {
         AuthUser req = new AuthUser();
         req.setAccount(username);
         req.setPassword(password);
-        AuthUser authUser = rpcFacade.iAuthFacade.getAuthUser(req, true, true);
+        AuthUserVO authUser = rpcFacade.iAuthFacade.getAuthUser(req, true, true);
         return RestResponse.ok(authUser);
     }
     

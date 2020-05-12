@@ -9,7 +9,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * </p>
  *
  * @author CodeGenerator
- * @since 2019-11-20
+ * @since 2020-03-06
  */
 public interface IAuthUserDao extends IService<AuthUser> {
 

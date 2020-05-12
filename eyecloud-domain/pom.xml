@@ -20,7 +20,11 @@
 			<groupId>io.swagger</groupId>
 			<artifactId>swagger-annotations</artifactId>
 		</dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+        </dependency>
 
-	</dependencies>
+    </dependencies>
 
 </project>

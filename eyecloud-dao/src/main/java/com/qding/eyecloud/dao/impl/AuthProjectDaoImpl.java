@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
  * </p>
  *
  * @author CodeGenerator
- * @since 2019-11-20
+ * @since 2020-03-06
  */
 @Service
 public class AuthProjectDaoImpl extends ServiceImpl<AuthProjectMapper, AuthProject> implements IAuthProjectDao {

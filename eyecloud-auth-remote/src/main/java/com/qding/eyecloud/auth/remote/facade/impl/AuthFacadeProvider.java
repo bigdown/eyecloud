@@ -7,6 +7,9 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import com.qding.eyecloud.common.data.response.auth.AuthUserVO;
+import com.qding.eyecloud.dao.*;
+import com.qding.eyecloud.model.*;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,26 +33,17 @@ import com.qding.eyecloud.common.utils.JsonUtil;
 import com.qding.eyecloud.common.utils.ShaUtils;
 import com.qding.eyecloud.common.utils.SnowFlake;
 import com.qding.eyecloud.common.utils.TreeUtils;
-import com.qding.eyecloud.dao.IAuthMenuDao;
-import com.qding.eyecloud.dao.IAuthMenuOperateDao;
-import com.qding.eyecloud.dao.IAuthRoleMenuDao;
-import com.qding.eyecloud.dao.IAuthUserDao;
-import com.qding.eyecloud.dao.IAuthUserRoleDao;
-import com.qding.eyecloud.model.AuthMenu;
-import com.qding.eyecloud.model.AuthMenuOperate;
-import com.qding.eyecloud.model.AuthRoleMenu;
-import com.qding.eyecloud.model.AuthUser;
-import com.qding.eyecloud.model.AuthUserRole;
 
 import io.jsonwebtoken.Claims;
 
 /**
  * Desc: auth dubbo服务提供者
  * Info: <功能详细描述>
- * @since  [产品/模块版本]
+ *
  * @author tanshen@qding.me
  * @version v1.0
  * @Date: 2019年11月28日
+ * @since [产品/模块版本]
  */
 @Service
 public class AuthFacadeProvider implements IAuthFacade {
@@ -69,28 +63,32 @@ public class AuthFacadeProvider implements IAuthFacade {
     @Autowired
     private IAuthRoleMenuDao iAuthRoleMenuDao;
 
-    @Override
-    public AuthUser getAuthUser(AuthUser req, boolean checkPassWord, boolean createToken) {
+    @Autowired
+    private IAuthUserProjectDao iAuthUserProjectDao;
 
+    @Override
+    public AuthUserVO getAuthUser(AuthUser req, boolean checkPassWord, boolean createToken) {
+        AuthUserVO authUserVO = new AuthUserVO();
         A.checkParams(Objects.isNull(req) || StringUtils.isBlank(req.getAccount()), "入参错误");
 
         AuthUser authUser =
-            iAuthUserDao.getOne(Wrappers.<AuthUser> lambdaQuery().eq(AuthUser::getAccount, req.getAccount()));
+                iAuthUserDao.getOne(Wrappers.<AuthUser>lambdaQuery().eq(AuthUser::getAccount, req.getAccount()));
 
         A.checkBusiness(Objects.isNull(authUser), EyecloudConstants.COMMON_FAIL, "用户不存在");
 
         if (checkPassWord) {
             A.checkParams(StringUtils.isBlank(req.getPassword()), "密码不能为空");
             A.checkParams(
-                !ShaUtils.shaxxx(req.getPassword(), authUser.getSalt(), ShaUtils.SHA_256)
-                    .equals(authUser.getPassword()),
-                "账号名或密码错误");
-        }
-        if (createToken) {
-            authUser.setToken(generateToken(authUser));
+                    !ShaUtils.shaxxx(req.getPassword(), authUser.getSalt(), ShaUtils.SHA_256)
+                            .equals(authUser.getPassword()),
+                    "账号名或密码错误");
         }
         sensitiveUser(authUser);
-        return authUser;
+        authUserVO.setBase(authUser);
+        if (createToken) {
+            authUserVO.setToken(generateToken(authUser));
+        }
+        return authUserVO;
     }
 
     @Override
@@ -101,13 +99,14 @@ public class AuthFacadeProvider implements IAuthFacade {
     /**
      * 生成token
      * 功能详细描述
+     *
      * @param req
      * @return String
-     * @since [产品/模块版本]
      * @author tanshen@qding.me
      * @version v1.0
      * Date:2019年12月27日 12:05
-    **/
+     * @since [产品/模块版本]
+     **/
     @Override
     public String generateToken(AuthUser req) {
         A.checkParams(req == null || StringUtils.isAnyBlank(req.getAccount(), req.getId()), "入参错误");
@@ -118,13 +117,14 @@ public class AuthFacadeProvider implements IAuthFacade {
     /**
      * 校验token并返回用户信息
      * 功能详细描述
+     *
      * @param token
      * @return AuthUser
-     * @since [产品/模块版本]
      * @author tanshen@qding.me
      * @version v1.0
      * Date:2019年12月27日 12:04
-    **/
+     * @since [产品/模块版本]
+     **/
     @Override
     public AuthUser checkAndGetAuthUser(String token) {
         Claims claims = JwtUtils.getTokenBody(token);
@@ -139,12 +139,13 @@ public class AuthFacadeProvider implements IAuthFacade {
     /**
      * 过滤敏感信息
      * 功能详细描述
+     *
      * @param authUser
-     * @since [产品/模块版本]
      * @author tanshen@qding.me
      * @version v1.0
      * Date:2019年12月27日 12:03
-    **/
+     * @since [产品/模块版本]
+     **/
     private void sensitiveUser(AuthUser authUser) {
         authUser.setPassword("*");
         authUser.setSalt("*");
@@ -153,13 +154,14 @@ public class AuthFacadeProvider implements IAuthFacade {
     /**
      * 用户注册
      * 功能详细描述
+     *
      * @param req
      * @return AuthUser
-     * @since [产品/模块版本]
      * @author tanshen@qding.me
      * @version v1.0
      * Date:2019年12月27日 12:01
-    **/
+     * @since [产品/模块版本]
+     **/
     @Override
     public AuthUser register(AuthUser req) {
         A.checkParams(Objects.isNull(req) || StringUtils.isAnyBlank(req.getMobile(), req.getPassword()), "入参错误");
@@ -176,33 +178,39 @@ public class AuthFacadeProvider implements IAuthFacade {
     /**
      * 获取用户的权限菜单
      * 功能详细描述
-     * @param authUser
+     *
      * @return UserDataVO
-     * @since [产品/模块版本]
      * @author tanshen@qding.me
      * @version v1.0
      * Date:2019年12月27日 11:59
-    **/
+     * @since [产品/模块版本]
+     **/
     @Override
-    public UserDataVO getAuthPermissions(AuthUser authUser) {
+    public UserDataVO getAuthPermissions(String userId, String tenantId, String accountType) {
+        A.checkParams(StringUtils.isBlank(accountType), "账号类型accountType不能为空");
         UserDataVO userDataVO = new UserDataVO();
-        AuthUserTypeEnum userType = AuthUserTypeEnum.getByCode(authUser.getAccountType());
-        LambdaQueryWrapper<AuthUserRole> query = Wrappers.<AuthUserRole> lambdaQuery();
+        AuthUserTypeEnum userType = AuthUserTypeEnum.getByCode(accountType);
+        LambdaQueryWrapper<AuthUserRole> query = Wrappers.<AuthUserRole>lambdaQuery();
         Set<String> roleIds = null;
 
         if (AuthUserTypeEnum.ADMIN.getType().equals(userType.getType())) {
             // 超级管理员拥有所有权限
         } else if (AuthUserTypeEnum.T_ADMIN.getType().equals(userType.getType())) {
             // 租户管理员拥有该租户下面的所有权限
-            query.eq(AuthUserRole::getTenantId, authUser.getTenantId());
+            A.checkParams(StringUtils.isBlank(tenantId), "租户tenantId不能为空");
+            query.eq(AuthUserRole::getTenantId, tenantId);
             roleIds = iAuthUserRoleDao.list(query).stream().map(AuthUserRole::getRoleId).collect(Collectors.toSet());
         } else if (AuthUserTypeEnum.P_ADMIN.getType().equals(userType.getType())) {
             // 项目管理员拥有该项目下面的所有权限
-            query.eq(AuthUserRole::getProjectId, authUser.getProjectId());
+            // 获取项目管理所管理的项目
+            A.checkParams(StringUtils.isBlank(tenantId), "租户id不能为空");
+            List<AuthUserProject> authUserProjectList = iAuthUserProjectDao.list(Wrappers.<AuthUserProject>lambdaQuery().eq(AuthUserProject::getTenantId, tenantId).eq(AuthUserProject::getUserId, userId));
+            A.checkBusiness(CollectionUtils.isEmpty(authUserProjectList), "该项目管理员没有关联项目");
+            query.in(AuthUserRole::getProjectId, authUserProjectList.stream().map(AuthUserProject::getProjectId).collect(Collectors.toSet()));
             roleIds = iAuthUserRoleDao.list(query).stream().map(AuthUserRole::getRoleId).collect(Collectors.toSet());
         } else {
             // 普通用户获取该用户的权限
-            query.eq(AuthUserRole::getUserId, authUser.getId());
+            query.eq(AuthUserRole::getUserId, userId);
             roleIds = iAuthUserRoleDao.list(query).stream().map(AuthUserRole::getRoleId).collect(Collectors.toSet());
         }
 
@@ -211,19 +219,19 @@ public class AuthFacadeProvider implements IAuthFacade {
             return userDataVO;
         }
         Set<String> menuIds = iAuthRoleMenuDao
-            .list(Wrappers.<AuthRoleMenu> lambdaQuery()
-                .in(!CollectionUtils.isEmpty(roleIds), AuthRoleMenu::getRoleId, roleIds))
-            .stream()
-            .map(AuthRoleMenu::getMenuId)
-            .collect(Collectors.toSet());
+                .list(Wrappers.<AuthRoleMenu>lambdaQuery().eq(AuthRoleMenu::getTenantId, tenantId)
+                        .in(!CollectionUtils.isEmpty(roleIds), AuthRoleMenu::getRoleId, roleIds))
+                .stream()
+                .map(AuthRoleMenu::getMenuId)
+                .collect(Collectors.toSet());
         if (!AuthUserTypeEnum.ADMIN.getType().equals(userType.getType()) && CollectionUtils.isEmpty(menuIds)) {
             // 如果非管理员，且角色没有绑定菜单，则认为该用户没有相关权限，直接返回
             return userDataVO;
         }
         List<AuthMenu> menus = iAuthMenuDao
-            .list(Wrappers.<AuthMenu> lambdaQuery().in(!CollectionUtils.isEmpty(menuIds), AuthMenu::getId, menuIds));
-        List<AuthMenuOperate> operates = iAuthMenuOperateDao.list(Wrappers.<AuthMenuOperate> lambdaQuery()
-            .in(!CollectionUtils.isEmpty(menuIds), AuthMenuOperate::getMenuId, menuIds));
+                .list(Wrappers.<AuthMenu>lambdaQuery().in(!CollectionUtils.isEmpty(menuIds), AuthMenu::getId, menuIds));
+        List<AuthMenuOperate> operates = iAuthMenuOperateDao.list(Wrappers.<AuthMenuOperate>lambdaQuery()
+                .in(!CollectionUtils.isEmpty(menuIds), AuthMenuOperate::getMenuId, menuIds));
         // 转换成map，在进行数据组装
         Map<String, List<AuthOperateVO>> map = MapUtils.listToMapForOperate(operates);
         List<AuthMenuVO> menuList = new ArrayList<>();

@@ -81,11 +81,6 @@
 		</dependency>
 
 		<dependency>
-			<groupId>org.apache.commons</groupId>
-			<artifactId>commons-io</artifactId>
-		</dependency>
-
-		<dependency>
 			<groupId>commons-fileupload</groupId>
 			<artifactId>commons-fileupload</artifactId>
 		</dependency>
@@ -145,11 +140,6 @@
 
 		<dependency>
 			<groupId>com.qding</groupId>
-			<artifactId>eyecloud-data-center-facade</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>com.qding</groupId>
 			<artifactId>eyecloud-common</artifactId>
 		</dependency>
 
@@ -160,32 +150,11 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<version>2.0.1.RELEASE</version>
 				<configuration>
 					<executable>true</executable>
 					<fork>true</fork>
 				</configuration>
-			</plugin>
-
-			<plugin>
-				<artifactId>maven-antrun-plugin</artifactId> <!-- 拷贝插件 -->
-				<executions>
-					<execution>
-						<id>copy</id>
-						<phase>install</phase> <!-- maven生命周期 -->
-						<configuration>
-							<tasks> <!-- 其他语法自行百度maven-antrun-plugin插件的相关用法 -->
-								<copy todir="${output.jar.directory}"> <!-- 文件将要输出目录 在parent pom中统一配置，此处引用即可 -->
-									<fileset dir="${project.build.directory}"> <!-- 待拷贝文件的目录，默认目录在项目的target下 -->
-										<include name="${project.artifactId}-0.0.1-SNAPSHOT.jar" /> <!-- 待拷贝文件，可以使用下面的通配符，还可以是其他目录的文件。此处需要与project.bulid.finalName对应，否则可能找不到文件 -->
-									</fileset>
-								</copy>
-							</tasks>
-						</configuration>
-						<goals>
-							<goal>run</goal>
-						</goals>
-					</execution>
-				</executions>
 			</plugin>
 		</plugins>
 	</build>

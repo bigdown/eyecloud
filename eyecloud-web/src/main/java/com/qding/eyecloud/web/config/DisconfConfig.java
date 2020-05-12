@@ -9,6 +9,7 @@ import org.springframework.beans.factory.config.PropertyPlaceholderConfigurer;
 import org.springframework.boot.autoconfigure.AutoConfigureOrder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.core.Ordered;
 
 import com.baidu.disconf.client.DisconfMgrBean;
@@ -44,9 +45,9 @@ public class DisconfConfig {
 	}
 
 	@Bean(name = "propertyPlaceholderConfigurer")
-	public PropertyPlaceholderConfigurer propertyPlaceholderConfigurer(
+	public PropertySourcesPlaceholderConfigurer propertyPlaceholderConfigurer(
 			ReloadablePropertiesFactoryBean reloadablePropertiesFactoryBean) {
-		PropertyPlaceholderConfigurer placeholderConfigurer = new PropertyPlaceholderConfigurer();
+		PropertySourcesPlaceholderConfigurer placeholderConfigurer = new PropertySourcesPlaceholderConfigurer();
 		placeholderConfigurer.setIgnoreResourceNotFound(true);
 		placeholderConfigurer.setIgnoreUnresolvablePlaceholders(true);
 		try {

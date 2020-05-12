@@ -1,5 +1,6 @@
 package com.qding.eyecloud.auth.remote.facade;
 
+import com.qding.eyecloud.common.data.response.auth.AuthUserVO;
 import com.qding.eyecloud.common.data.response.auth.UserDataVO;
 import com.qding.eyecloud.model.AuthUser;
 
@@ -17,7 +18,7 @@ public interface IAuthFacade {
 	/**
 	 * 登录（根据id或者账号获取信息）
 	 */
-	AuthUser getAuthUser(AuthUser authUser, boolean checkPass, boolean createToken);
+	AuthUserVO getAuthUser(AuthUser authUser, boolean checkPass, boolean createToken);
 
 	/**
 	 * 生成token
@@ -28,7 +29,6 @@ public interface IAuthFacade {
 	/**
 	 * 一句话功能简述
 	 * 功能详细描述
-	 * @param [authUser]
 	 * @return com.qding.eyecloud.model.AuthUser
 	 * @throws
 	 * @since [产品/模块版本]
@@ -63,11 +63,10 @@ public interface IAuthFacade {
 	/**
 	 * Desc:获取用户的权限集合
 	 * Info:<功能详细描述>
-	 * @param authUser
 	 * @return
 	 * @author tanshen@qding.me
 	 * Date:2019年11月29日 下午3:45:14
 	 */
-	UserDataVO getAuthPermissions(AuthUser authUser);
+	UserDataVO getAuthPermissions(String userId, String tenantId, String accountType);
 
 }

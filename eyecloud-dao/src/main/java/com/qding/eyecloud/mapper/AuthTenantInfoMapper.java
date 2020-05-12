@@ -9,7 +9,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * </p>
  *
  * @author CodeGenerator
- * @since 2019-11-20
+ * @since 2020-03-06
  */
 public interface AuthTenantInfoMapper extends BaseMapper<AuthTenantInfo> {
 
