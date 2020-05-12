@@ -27,12 +27,6 @@
 		<!-- https://mvnrepository.com/artifact/io.projectreactor/reactor-core -->
 		<!-- <dependency> <groupId>io.projectreactor</groupId> <artifactId>reactor-core</artifactId> </dependency> -->
 
-
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-freemarker</artifactId>
-		</dependency>
-
 		<dependency>
 			<groupId>org.springframework.session</groupId>
 			<artifactId>spring-session-data-redis</artifactId>
@@ -59,15 +53,15 @@
 			<artifactId>zkclient</artifactId>
 		</dependency>
 
-<!--		<dependency>-->
-<!--			<groupId>org.springframework.data</groupId>-->
-<!--			<artifactId>spring-data-redis</artifactId>-->
-<!--		</dependency>-->
+		<dependency>
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-redis</artifactId>
+		</dependency>
 
-<!--		<dependency>-->
-<!--			<groupId>redis.clients</groupId>-->
-<!--			<artifactId>jedis</artifactId>-->
-<!--		</dependency>-->
+		<dependency>
+			<groupId>redis.clients</groupId>
+			<artifactId>jedis</artifactId>
+		</dependency>
 
 		<!-- javassist -->
 		<dependency>

@@ -1,5 +1,6 @@
 package com.qding.eyecloud.common.exception;
 
+import com.alibaba.dubbo.rpc.RpcException;
 import com.qding.eyecloud.common.constants.EyecloudConstants;
 
 /**
@@ -14,25 +15,25 @@ public class A {
     
     public static void checkParams(boolean result) {
         if (result) {
-            throw new ParamsException("入参为空");
+            throw new RpcException("入参为空");
         }
     }
     
     public static void checkParams(boolean result, String msg) {
         if (result) {
-            throw new ParamsException(msg);
+            throw new RpcException(msg);
         }
     }
     
     public static void checkBusiness(boolean result, String code, String msg) {
         if (result) {
-            throw new BusinessException(code, msg);
+            throw new RpcException(Integer.valueOf(code), msg);
         }
     }
     
     public static void checkBusiness(boolean result, String msg) {
         if (result) {
-            throw new BusinessException(EyecloudConstants.COMMON_FAIL, msg);
+            throw new RpcException(Integer.valueOf(EyecloudConstants.COMMON_FAIL), msg);
         }
     }
 }

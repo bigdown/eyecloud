@@ -20,6 +20,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.session.data.redis.config.ConfigureRedisAction;
 import org.springframework.web.filter.DelegatingFilterProxy;
 
 import com.qding.eyecloud.web.auth2.OAuth2Filter;
@@ -46,6 +47,11 @@ public class ShiroConfig {
         sessionManager.setGlobalSessionTimeout(globalSessionTimeout * 1000);
         
         return sessionManager;
+    }
+
+    @Bean
+    public static ConfigureRedisAction configureRedisAction() {
+        return ConfigureRedisAction.NO_OP;
     }
     
     /**

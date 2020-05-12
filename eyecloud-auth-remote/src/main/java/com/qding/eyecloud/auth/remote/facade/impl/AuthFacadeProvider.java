@@ -84,10 +84,10 @@ public class AuthFacadeProvider implements IAuthFacade {
                     "账号名或密码错误");
         }
         sensitiveUser(authUser);
-        authUserVO.setBase(authUser);
         if (createToken) {
             authUserVO.setToken(generateToken(authUser));
         }
+        authUserVO.setBase(authUser);
         return authUserVO;
     }
 
@@ -110,7 +110,6 @@ public class AuthFacadeProvider implements IAuthFacade {
     @Override
     public String generateToken(AuthUser req) {
         A.checkParams(req == null || StringUtils.isAnyBlank(req.getAccount(), req.getId()), "入参错误");
-        sensitiveUser(req);
         return JwtUtils.createToken(req.getId(), JsonUtil.writeValue(req), false);
     }
 
@@ -170,6 +169,7 @@ public class AuthFacadeProvider implements IAuthFacade {
         req.setPassword(ShaUtils.shaxxx(req.getPassword(), req.getSalt(), ShaUtils.SHA_256));
         req.setAccount(req.getMobile());
         req.setNickName(req.getMobile());
+        req.setAccountType("0");
         iAuthUserDao.save(req);
         sensitiveUser(req);
         return req;

@@ -4,10 +4,12 @@ import java.util.List;
 
 import javax.ws.rs.BadRequestException;
 
+import com.alibaba.dubbo.rpc.RpcException;
 import org.apache.http.HttpStatus;
 import org.apache.shiro.authz.UnauthorizedException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
@@ -27,17 +29,35 @@ import com.qding.eyecloud.common.exception.ParamsException;
 public class RExceptionHandler {
     
     private static final Logger log = LoggerFactory.getLogger(RExceptionHandler.class);
-    
+
+    @ExceptionHandler(Exception.class)
+    public RestResponse<String> handleRException(Exception e) {
+        log.error("error is {}", e);
+        return RestResponse.error(String.valueOf(HttpStatus.SC_INTERNAL_SERVER_ERROR), "系统繁忙");
+    }
+
+    @ExceptionHandler(RuntimeException.class)
+    public RestResponse<String> handleRuntimeException(RuntimeException e) {
+        log.error("error is {}", e);
+        return RestResponse.error(String.valueOf(HttpStatus.SC_INTERNAL_SERVER_ERROR), "系统繁忙");
+    }
+
+    @ExceptionHandler(RpcException.class)
+    public RestResponse<String> handleRpcException(RpcException e) {
+        log.error("error is {}", e);
+        return RestResponse.error(String.valueOf(e.getCode()), e.getMessage());
+    }
+
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public RestResponse<String> handleDataIntegrityViolationException(DataIntegrityViolationException e) {
+        log.error("error is {}", e);
+        return RestResponse.error(String.valueOf(HttpStatus.SC_INTERNAL_SERVER_ERROR), "系统异常");
+    }
+
     @ExceptionHandler(ParamsException.class)
     public RestResponse<String> handleParamsException(ParamsException e) {
         log.error("error is {}", e.getMsg());
         return RestResponse.error(String.valueOf(HttpStatus.SC_INTERNAL_SERVER_ERROR), e.getMsg());
-    }
-    
-    @ExceptionHandler(BusinessException.class)
-    public RestResponse<String> handleBusinessException(BusinessException e) {
-        log.error("error is {}", e.getMsg());
-        return RestResponse.error(e.getCode(), e.getMsg());
     }
     
     @ExceptionHandler(CommonException.class)
@@ -63,17 +83,11 @@ public class RExceptionHandler {
         log.error("error is {}", e);
         return RestResponse.error(String.valueOf(HttpStatus.SC_INTERNAL_SERVER_ERROR), "服务器繁忙");
     }
-    
-    @ExceptionHandler(RuntimeException.class)
-    public RestResponse<String> handleRException(RuntimeException e) {
-        log.error("error is {}", e);
-        return RestResponse.error(String.valueOf(HttpStatus.SC_INTERNAL_SERVER_ERROR), "服务器繁忙");
-    }
-    
-    @ExceptionHandler(Exception.class)
-    public RestResponse<String> handleRException(Exception e) {
-        log.error("error is {}", e);
-        return RestResponse.error(String.valueOf(HttpStatus.SC_INTERNAL_SERVER_ERROR), "服务器繁忙");
+
+    @ExceptionHandler(BusinessException.class)
+    public RestResponse<String> handleBusinessException(BusinessException e) {
+        log.error("error is {}", e.getMsg());
+        return RestResponse.error(e.getCode(), e.getMsg());
     }
     
     @ExceptionHandler(DuplicateKeyException.class)
@@ -100,5 +114,4 @@ public class RExceptionHandler {
         }
         return RestResponse.error(String.valueOf(HttpStatus.SC_INTERNAL_SERVER_ERROR), result);
     }
-    
 }

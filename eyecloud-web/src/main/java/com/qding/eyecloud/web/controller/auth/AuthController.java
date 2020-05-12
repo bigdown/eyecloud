@@ -7,8 +7,10 @@ import javax.imageio.ImageIO;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 
+import com.qding.eyecloud.common.data.request.auth.LoginVO;
 import com.qding.eyecloud.common.data.response.auth.AuthUserVO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -34,7 +36,7 @@ public class AuthController {
     
     @Autowired
     private RpcFacade rpcFacade;
-    
+
     @GetMapping("captcha.jpg")
     public void captcha(HttpServletResponse response)
         throws IOException {
@@ -57,16 +59,15 @@ public class AuthController {
      */
     @PostMapping(value = "/auth/login")
     @ResponseBody
-    public RestResponse<AuthUserVO> login(@RequestParam(name = "username") String username,
-        @RequestParam(name = "password") String password, @RequestParam String captcha) {
+    public RestResponse<AuthUserVO> login(@RequestBody LoginVO loginVO) {
         // String kaptcha = ShiroUtils.getKaptcha(Constants.KAPTCHA_SESSION_KEY);
         // if (!captcha.equalsIgnoreCase(kaptcha)) {
         // return RestResponse.error("验证码不正确");
         // }
         // 调用登录逻辑
         AuthUser req = new AuthUser();
-        req.setAccount(username);
-        req.setPassword(password);
+        req.setAccount(loginVO.getUsername());
+        req.setPassword(loginVO.getPassword());
         AuthUserVO authUser = rpcFacade.iAuthFacade.getAuthUser(req, true, true);
         return RestResponse.ok(authUser);
     }
@@ -80,14 +81,5 @@ public class AuthController {
         // 调用注册逻辑
         AuthUser authUser = rpcFacade.iAuthFacade.register(req);
         return RestResponse.ok(authUser);
-    }
-    
-    /**
-     * 退出
-     */
-    @GetMapping(value = "auth/logout")
-    public String logout() {
-        ShiroUtils.logout();
-        return "redirect:login.html";
     }
 }

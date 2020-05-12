@@ -3,8 +3,6 @@ package com.qding.eyecloud.auth.remote.utils;
 import java.util.Date;
 import java.util.Random;
 
-import org.apache.http.HttpStatus;
-
 import com.qding.eyecloud.common.exception.CommonException;
 
 import io.jsonwebtoken.Claims;
@@ -36,7 +34,6 @@ public class JwtUtils {
     /**
      * 创建token
      * 注：如果是根据可变的唯一值来生成，唯一值变化时，需重新生成token
-     * @param username
      * @param isRememberMe
      * @return
      */
@@ -85,10 +82,10 @@ public class JwtUtils {
             return Jwts.parser().setSigningKey(SECRET).parseClaimsJws(token).getBody();
         } catch (ExpiredJwtException expired) {
             // 过期
-            throw new CommonException("token过期", String.valueOf(HttpStatus.SC_UNAUTHORIZED));
+            throw new CommonException("token过期", "401");
         } catch (SignatureException e) {
             // 无效
-            throw new CommonException("token失效", String.valueOf(HttpStatus.SC_UNAUTHORIZED));
+            throw new CommonException("token失效", "401");
         }
     }
 

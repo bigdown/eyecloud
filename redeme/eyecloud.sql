@@ -2,7 +2,7 @@ drop table if exists qdh_auth_user;
 create table qdh_auth_user
 (
    id                   varchar(64) NOT NULL primary key comment '主键id',
-   tenant_id            varchar(64) NOT NULL COMMENT '租户id',
+   tenant_id            varchar(64) NULL COMMENT '租户id',
    account              varchar(64) NOT NULL comment '用户账号',
    mobile               varchar(20) NOT NULL default '' comment '手机号',
    email                varchar(64) NOT NULL default '' comment '邮箱',
@@ -12,11 +12,16 @@ create table qdh_auth_user
    nick_name            varchar(20) NOT NULL comment '用户昵称',
    account_type			varchar(2) NOT NULL comment '账号类型：0普通账号，1超级管理员，2租户管理员，3项目管理员',
    `version`            int not null default 1 comment '版本号字段，用于乐观锁',
-   `creator`            varchar(64) not null comment '创建人',
+   `creator`            varchar(64) null comment '创建人',
    `create_time`        timestamp not null default CURRENT_TIMESTAMP comment '创建时间',
-   `updator`            varchar(64) not null default '' comment '修改人',
+   `updator`            varchar(64) null default '' comment '修改人',
    `update_time`        timestamp not null default CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP comment '修改时间'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 comment 'qdh_用户表';
+
+ALTER TABLE `qdh_auth_user`
+ADD UNIQUE INDEX `UK_ACCOUNT` (`account` ASC) INVISIBLE,
+ADD UNIQUE INDEX `UK_MOBILE` (`mobile` ASC) VISIBLE;
+;
 
 drop table if exists qdh_auth_tenant_info;
 CREATE TABLE `qdh_auth_tenant_info` (
@@ -67,6 +72,7 @@ create table qdh_auth_user_project
    tenant_id            varchar(64) NOT NULL comment '租户id',
    user_id              varchar(64) NOT NULL comment '用户id',
    project_id           varchar(64) NOT NULL comment '项目id',
+   `version`            int not null default 1 comment '版本号字段，用于乐观锁',
    `creator`            varchar(64) comment '创建人',
    `create_time`        timestamp not null default CURRENT_TIMESTAMP comment '创建时间',
    `updator`            varchar(64) comment '修改人',
@@ -97,6 +103,7 @@ create table qdh_auth_user_role
    project_id           varchar(64) NOT NULL comment '项目id',
    user_id              varchar(64) NOT NULL comment '用户id',
    role_id              varchar(64) NOT NULL comment '角色id',
+   `version`            int not null default 1 comment '版本号字段，用于乐观锁',
    `creator`            varchar(64) comment '创建人',
    `create_time`        timestamp not null default CURRENT_TIMESTAMP comment '创建时间',
    `updator`            varchar(64) comment '修改人',
@@ -129,6 +136,7 @@ create table qdh_auth_role_menu
    project_id           varchar(64) NOT NULL comment '项目id',
    role_id              varchar(64) NOT NULL comment '角色id',
    menu_id              varchar(64) NOT NULL comment '菜单id',
+   `version`            int not null default 1 comment '版本号字段，用于乐观锁',
    `creator`            varchar(64) comment '创建人',
    `create_time`        timestamp not null default CURRENT_TIMESTAMP comment '创建时间',
    `updator`            varchar(64) comment '修改人',
