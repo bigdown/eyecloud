@@ -37,7 +37,7 @@ public class TestController {
                 "else \n" +
                 "\treturn 1\n" +
                 "end\n";
-        Object result = RedisUtil.getRedisUtil().evalsha(lua, Arrays.asList("localhost"), Arrays.asList("10", "2"));
+        Object result = RedisUtil.getRedisUtil().evalsha(lua, Arrays.asList("localhost"), Arrays.asList("10", "5"));
         return "result" + result.toString();
     }
 }
