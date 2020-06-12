@@ -51,7 +51,7 @@ public class CodeGenerator {
 
         // 数据源配置
         DataSourceConfig dsc = new DataSourceConfig();
-        dsc.setUrl("jdbc:mysql://127.0.0.1:3306/eyecloud?serverTimezone=Asia/Shanghai&useUnicode=true&useSSL=false&characterEncoding=utf8");
+        dsc.setUrl("jdbc:mysql://127.0.0.1:3306/db1?serverTimezone=Asia/Shanghai&useUnicode=true&useSSL=false&characterEncoding=utf8");
         dsc.setDriverName("com.mysql.jdbc.Driver");
         dsc.setUsername("root");
         dsc.setPassword("1234qwer");
@@ -158,11 +158,11 @@ public class CodeGenerator {
         strategy.setSuperControllerClass("com.qding.eyecloud.controller.BaseController");
         // 表名，多个英文逗号分割
         // String tbNames = "qdh_auth_menu,qdh_auth_menu_operate,qdh_auth_project,qdh_auth_role,qdh_auth_role_menu,qdh_auth_tenant_info,qdh_auth_user,qdh_auth_user_role";
-        String tbNames = "qdh_auth_user_project";
+        String tbNames = "company,customer,orders,order_items";
         strategy.setInclude(tbNames.split(","));
         // strategy.setSuperEntityColumns("id");
         strategy.setControllerMappingHyphenStyle(true);
-        strategy.setTablePrefix("qdh_");
+        strategy.setTablePrefix("");
         mpg.setStrategy(strategy);
         mpg.setTemplateEngine(new FreemarkerTemplateEngine());
         mpg.execute();

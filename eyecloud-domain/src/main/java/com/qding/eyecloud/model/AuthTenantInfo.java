@@ -23,9 +23,6 @@ public class AuthTenantInfo extends BaseModel {
     @ApiModelProperty(value = "主键id")
     private String id;
 
-    @ApiModelProperty(value = "租户id")
-    private String tenantId;
-
     @ApiModelProperty(value = "租户名称")
     private String tenantName;
 
@@ -74,22 +71,14 @@ public class AuthTenantInfo extends BaseModel {
     @ApiModelProperty(value = "修改时间")
     private Date updateTime;
 
+    @Override
     public String getId() {
         return id;
     }
 
+    @Override
     public void setId(String id) {
         this.id = id;
-    }
-    public String getTenantId() {
-        return tenantId;
-    }
-
-    public void setTenantId(String tenantId) {
-        this.tenantId = tenantId;
-    }
-    public String getTenantName() {
-        return tenantName;
     }
 
     public void setTenantName(String tenantName) {
@@ -165,38 +154,49 @@ public class AuthTenantInfo extends BaseModel {
     public void setStatus(String status) {
         this.status = status;
     }
+
+    @Override
     public Integer getVersion() {
         return version;
     }
 
+    @Override
     public void setVersion(Integer version) {
         this.version = version;
     }
+    @Override
     public String getCreator() {
         return creator;
     }
 
+    @Override
     public void setCreator(String creator) {
         this.creator = creator;
     }
+    @Override
     public Date getCreateTime() {
         return createTime;
     }
 
+    @Override
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
     }
+    @Override
     public String getUpdator() {
         return updator;
     }
 
+    @Override
     public void setUpdator(String updator) {
         this.updator = updator;
     }
+    @Override
     public Date getUpdateTime() {
         return updateTime;
     }
 
+    @Override
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
     }
@@ -205,7 +205,6 @@ public class AuthTenantInfo extends BaseModel {
     public String toString() {
         return "AuthTenantInfo{" +
         "id=" + id +
-        ", tenantId=" + tenantId +
         ", tenantName=" + tenantName +
         ", provinceCode=" + provinceCode +
         ", provinceName=" + provinceName +

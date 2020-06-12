@@ -56,10 +56,12 @@ public class AuthMenuOperate extends BaseModel {
     @ApiModelProperty(value = "修改时间")
     private Date updateTime;
 
+    @Override
     public String getId() {
         return id;
     }
 
+    @Override
     public void setId(String id) {
         this.id = id;
     }
@@ -105,38 +107,48 @@ public class AuthMenuOperate extends BaseModel {
     public void setOperateRemark(String operateRemark) {
         this.operateRemark = operateRemark;
     }
+    @Override
     public Integer getVersion() {
         return version;
     }
 
+    @Override
     public void setVersion(Integer version) {
         this.version = version;
     }
+    @Override
     public String getCreator() {
         return creator;
     }
 
+    @Override
     public void setCreator(String creator) {
         this.creator = creator;
     }
+    @Override
     public Date getCreateTime() {
         return createTime;
     }
 
+    @Override
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
     }
+    @Override
     public String getUpdator() {
         return updator;
     }
 
+    @Override
     public void setUpdator(String updator) {
         this.updator = updator;
     }
+    @Override
     public Date getUpdateTime() {
         return updateTime;
     }
 
+    @Override
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
     }

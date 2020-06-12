@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import io.swagger.annotations.ApiOperation;
+import org.springframework.context.annotation.Primary;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.ParameterBuilder;
 import springfox.documentation.builders.PathSelectors;
@@ -16,6 +17,9 @@ import springfox.documentation.service.ApiInfo;
 import springfox.documentation.service.Parameter;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
+import springfox.documentation.swagger.web.InMemorySwaggerResourcesProvider;
+import springfox.documentation.swagger.web.SwaggerResource;
+import springfox.documentation.swagger.web.SwaggerResourcesProvider;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 /**
@@ -29,6 +33,29 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @Configuration
 @EnableSwagger2
 public class SwaggerConfig {
+
+	@Bean
+	@Primary
+	public SwaggerResourcesProvider swaggerResourcesProvider(InMemorySwaggerResourcesProvider defaultResourcesProvider) {
+		return () -> {
+			List<SwaggerResource> resourcesList = new ArrayList<>();
+
+			// 模拟数据库获取拼接的文档，请求见SwaggerController
+			SwaggerResource resource2 = new SwaggerResource();
+			resource2.setName("动态API");
+			resource2.setSwaggerVersion("2.0");
+			resource2.setLocation("/v2/qding-api-docs");
+			resourcesList.add(resource2);
+
+			// 自身代码扫描生成的文档，默认路径http://localhost:8080/v2/api-docs
+			SwaggerResource resource3 = new SwaggerResource();
+			resource3.setName("自身");
+			resource3.setSwaggerVersion("2.0");
+			resource3.setLocation("/v2/api-docs");
+			resourcesList.add(resource3);
+			return resourcesList;
+		};
+	}
 
 	@Bean
 	public Docket createRestApi() {

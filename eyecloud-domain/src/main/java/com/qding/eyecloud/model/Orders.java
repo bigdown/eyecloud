@@ -1,6 +1,8 @@
 package com.qding.eyecloud.model;
 
 import com.baomidou.mybatisplus.annotation.TableName;
+
+import java.io.Serializable;
 import java.util.Date;
 import com.qding.eyecloud.base.BaseModel;
 import io.swagger.annotations.ApiModel;
@@ -8,32 +10,23 @@ import io.swagger.annotations.ApiModelProperty;
 
 /**
  * <p>
- * qdh_角色菜单表
+ * orders
  * </p>
  *
  * @author CodeGenerator
- * @since 2020-03-06
+ * @since 2020-06-09
  */
-@TableName("qdh_auth_role_menu")
-@ApiModel(value="AuthRoleMenu对象", description="qdh_角色菜单表")
-public class AuthRoleMenu extends BaseModel {
+@TableName("orders")
+@ApiModel(value="Orders对象", description="orders")
+public class Orders implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @ApiModelProperty(value = "主键id")
     private String id;
 
-    @ApiModelProperty(value = "租户id")
-    private String tenantId;
-
-    @ApiModelProperty(value = "项目id")
-    private String projectId;
-
-    @ApiModelProperty(value = "角色id")
-    private String roleId;
-
-    @ApiModelProperty(value = "菜单id")
-    private String menuId;
+    @ApiModelProperty(value = "customer_id")
+    private String customerId;
 
     @ApiModelProperty(value = "创建人")
     private String creator;
@@ -47,88 +40,54 @@ public class AuthRoleMenu extends BaseModel {
     @ApiModelProperty(value = "修改时间")
     private Date updateTime;
 
-    @Override
     public String getId() {
         return id;
     }
 
-    @Override
     public void setId(String id) {
         this.id = id;
     }
-    public String getTenantId() {
-        return tenantId;
+    public String getCustomerId() {
+        return customerId;
     }
 
-    public void setTenantId(String tenantId) {
-        this.tenantId = tenantId;
+    public void setCustomerId(String customerId) {
+        this.customerId = customerId;
     }
-    public String getProjectId() {
-        return projectId;
-    }
-
-    public void setProjectId(String projectId) {
-        this.projectId = projectId;
-    }
-    public String getRoleId() {
-        return roleId;
-    }
-
-    public void setRoleId(String roleId) {
-        this.roleId = roleId;
-    }
-    public String getMenuId() {
-        return menuId;
-    }
-
-    public void setMenuId(String menuId) {
-        this.menuId = menuId;
-    }
-    @Override
     public String getCreator() {
         return creator;
     }
 
-    @Override
     public void setCreator(String creator) {
         this.creator = creator;
     }
-    @Override
     public Date getCreateTime() {
         return createTime;
     }
 
-    @Override
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
     }
-    @Override
     public String getUpdator() {
         return updator;
     }
 
-    @Override
     public void setUpdator(String updator) {
         this.updator = updator;
     }
-    @Override
     public Date getUpdateTime() {
         return updateTime;
     }
 
-    @Override
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
     }
 
     @Override
     public String toString() {
-        return "AuthRoleMenu{" +
+        return "Orders{" +
         "id=" + id +
-        ", tenantId=" + tenantId +
-        ", projectId=" + projectId +
-        ", roleId=" + roleId +
-        ", menuId=" + menuId +
+        ", customerId=" + customerId +
         ", creator=" + creator +
         ", createTime=" + createTime +
         ", updator=" + updator +

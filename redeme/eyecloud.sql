@@ -15,18 +15,15 @@ create table qdh_auth_user
    `creator`            varchar(64) null comment '创建人',
    `create_time`        timestamp not null default CURRENT_TIMESTAMP comment '创建时间',
    `updator`            varchar(64) null default '' comment '修改人',
-   `update_time`        timestamp not null default CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP comment '修改时间'
+   `update_time`        timestamp not null default CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP comment '修改时间',
+	UNIQUE INDEX `UK_ACCOUNT` (`account` ASC),
+	UNIQUE INDEX `UK_MOBILE` (`mobile` ASC),
+	INDEX `tenant_id` (`tenant_id` ASC)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 comment 'qdh_用户表';
-
-ALTER TABLE `qdh_auth_user`
-ADD UNIQUE INDEX `UK_ACCOUNT` (`account` ASC) INVISIBLE,
-ADD UNIQUE INDEX `UK_MOBILE` (`mobile` ASC) VISIBLE;
-;
 
 drop table if exists qdh_auth_tenant_info;
 CREATE TABLE `qdh_auth_tenant_info` (
    id                    varchar(64) NOT NULL primary key comment '主键id',
-   `tenant_id`           varchar(64) NOT NULL COMMENT '租户id',
    `tenant_name`         varchar(50) NOT NULL COMMENT '租户名称',
    `province_code`       varchar(44) NOT NULL COMMENT '所在省',
    `province_name`       varchar(44) NOT NULL COMMENT '省名称',
@@ -62,7 +59,8 @@ create table qdh_auth_project
    `creator`             varchar(64) not null comment '创建人',
    `create_time`         timestamp not null default CURRENT_TIMESTAMP comment '创建时间',
    `updator`             varchar(64) not null default '' comment '修改人',
-   `update_time`         timestamp not null default CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP comment '修改时间'
+   `update_time`         timestamp not null default CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP comment '修改时间',
+	INDEX `tenant_id` (`tenant_id` ASC)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 comment 'qdh_项目表';
 
 drop table if exists qdh_auth_user_project;
@@ -76,7 +74,10 @@ create table qdh_auth_user_project
    `creator`            varchar(64) comment '创建人',
    `create_time`        timestamp not null default CURRENT_TIMESTAMP comment '创建时间',
    `updator`            varchar(64) comment '修改人',
-   `update_time`        timestamp not null default CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP comment '修改时间'
+   `update_time`        timestamp not null default CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP comment '修改时间',
+	INDEX `tenant_id` (`tenant_id` ASC),
+	INDEX `user_id` (`user_id` ASC),
+	INDEX `project_id` (`project_id` ASC)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 comment 'qdh_用户项目表';
 
 drop table if exists qdh_auth_role;
@@ -92,7 +93,9 @@ create table qdh_auth_role
    `creator`            varchar(64) comment '创建人',
    `create_time`        timestamp not null default CURRENT_TIMESTAMP comment '创建时间',
    `updator`            varchar(64) comment '修改人',
-   `update_time`        timestamp not null default CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP comment '修改时间'
+   `update_time`        timestamp not null default CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP comment '修改时间',
+	INDEX `tenant_id` (`tenant_id` ASC),
+	INDEX `project_id` (`project_id` ASC)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 comment 'qdh_角色表';
 
 drop table if exists qdh_auth_user_role;
@@ -107,7 +110,11 @@ create table qdh_auth_user_role
    `creator`            varchar(64) comment '创建人',
    `create_time`        timestamp not null default CURRENT_TIMESTAMP comment '创建时间',
    `updator`            varchar(64) comment '修改人',
-   `update_time`        timestamp not null default CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP comment '修改时间'
+   `update_time`        timestamp not null default CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP comment '修改时间',
+	INDEX `tenant_id` (`tenant_id` ASC),
+	INDEX `project_id` (`project_id` ASC),
+	INDEX `user_id` (`user_id` ASC),
+	INDEX `role_id` (`role_id` ASC)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 comment 'qdh_用户角色表';
 
 drop table if exists qdh_auth_menu;
@@ -140,7 +147,11 @@ create table qdh_auth_role_menu
    `creator`            varchar(64) comment '创建人',
    `create_time`        timestamp not null default CURRENT_TIMESTAMP comment '创建时间',
    `updator`            varchar(64) comment '修改人',
-   `update_time`        timestamp not null default CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP comment '修改时间'
+   `update_time`        timestamp not null default CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP comment '修改时间',
+	INDEX `tenant_id` (`tenant_id` ASC),
+	INDEX `project_id` (`project_id` ASC),
+	INDEX `role_id` (`role_id` ASC),
+	INDEX `menu_id` (`menu_id` ASC)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 comment 'qdh_角色菜单表';
 
 
@@ -158,6 +169,9 @@ create table qdh_auth_menu_operate
    `creator`            varchar(64) comment '创建人',
    `create_time`        timestamp not null default CURRENT_TIMESTAMP comment '创建时间',
    `updator`            varchar(64) comment '修改人',
-   `update_time`        timestamp not null default CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP comment '修改时间'
+   `update_time`        timestamp not null default CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP comment '修改时间',
+	INDEX `tenant_id` (`tenant_id` ASC),
+	INDEX `project_id` (`project_id` ASC),
+	INDEX `menu_id` (`menu_id` ASC)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 comment 'qdh_操作表';
 

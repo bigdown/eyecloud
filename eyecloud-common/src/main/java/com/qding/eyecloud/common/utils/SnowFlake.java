@@ -10,8 +10,8 @@ package com.qding.eyecloud.common.utils;
  */
 public class SnowFlake {
 
-	public static long defaultDatacenterId = 200;
-	public static long defaultMachineId = 100;
+	public static long defaultDatacenterId = 16;
+	public static long defaultMachineId = 16;
 
 	private static SnowFlake snowFlake = new SnowFlake(defaultDatacenterId, defaultMachineId);
 	/**
@@ -23,8 +23,8 @@ public class SnowFlake {
 	 * 每一部分占用的位数
 	 */
 	private final static long SEQUENCE_BIT = 12;
-	private final static long MACHINE_BIT = 10;
-	private final static long DATACENTER_BIT = 10;
+	private final static long MACHINE_BIT = 5;
+	private final static long DATACENTER_BIT = 5;
 
 	/**
 	 * 每一部分的最大值

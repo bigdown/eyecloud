@@ -38,7 +38,9 @@ public class DubboConfig {
 
 	@Bean
 	public RegistryConfig registryConfig() {
-		return new RegistryConfig(registryAddress);
+		RegistryConfig registryConfig = new RegistryConfig(registryAddress);
+		registryConfig.setRegister(false);
+		return registryConfig;
 	}
 
 	@Bean
@@ -62,6 +64,7 @@ public class DubboConfig {
 	public ConsumerConfig consumerConfig() {
 		ConsumerConfig consumerConfig = new ConsumerConfig();
 		consumerConfig.setFilter("traceLog");
+		consumerConfig.setScope("local");
 		return consumerConfig;
 	}
 
@@ -69,6 +72,7 @@ public class DubboConfig {
 	public ProviderConfig providerConfig() {
 		ProviderConfig providerConfig = new ProviderConfig();
 		providerConfig.setFilter("traceLog");
+		providerConfig.setScope("local");
 		return providerConfig;
 	}
 }

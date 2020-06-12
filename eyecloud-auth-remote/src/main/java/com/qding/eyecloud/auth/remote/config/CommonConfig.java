@@ -16,7 +16,7 @@ public class CommonConfig implements IDisconfUpdate {
 
 	private String test;
 
-	@DisconfFileItem(name = "test.test", associateField = "test")
+	@DisconfFileItem(name = "test.test")
 	public String getTest() {
 		return test;
 	}

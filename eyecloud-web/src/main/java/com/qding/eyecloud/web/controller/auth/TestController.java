@@ -1,6 +1,8 @@
 package com.qding.eyecloud.web.controller.auth;
 
 import com.qding.eyecloud.web.utils.RedisUtil;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;
 
+@Api
 @RestController
 @RequestMapping("test")
 public class TestController {
@@ -26,8 +29,8 @@ public class TestController {
 
     @RequestMapping(value = "jedis", method = RequestMethod.POST)
     @ResponseBody
+    @ApiOperation("")
     public String jedis(HttpServletRequest request) {
-
         String lua = "local num = redis.call('incr', KEYS[1])\n" +
                 "if tonumber(num) == 1 then\n" +
                 "\tredis.call('expire', KEYS[1], ARGV[1])\n" +
