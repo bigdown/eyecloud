@@ -28,7 +28,7 @@ public class DubboConfig {
 	@Bean
 	public RegistryConfig registryConfig() {
 		RegistryConfig registryConfig = new RegistryConfig(registryAddress);
-		registryConfig.setRegister(false);
+//		registryConfig.setRegister(false);
 		return registryConfig;
 	}
 
@@ -43,7 +43,7 @@ public class DubboConfig {
 	public ConsumerConfig consumerConfig() {
 		ConsumerConfig consumerConfig = new ConsumerConfig();
 		consumerConfig.setFilter("traceLog");
-		consumerConfig.setScope("local");
+//		consumerConfig.setScope("local");
 		return consumerConfig;
 	}
 }

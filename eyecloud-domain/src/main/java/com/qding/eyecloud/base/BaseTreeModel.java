@@ -7,7 +7,7 @@ public class BaseTreeModel extends BaseModel {
     private static final long serialVersionUID = -8156900538888203031L;
     
     @ApiModelProperty(value = "父级id，顶层为-1")
-    private String parentId;
+    protected String parentId;
     
     public String getParentId() {
         return parentId;

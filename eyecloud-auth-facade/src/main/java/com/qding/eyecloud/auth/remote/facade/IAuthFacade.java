@@ -67,6 +67,6 @@ public interface IAuthFacade {
 	 * @author tanshen@qding.me
 	 * Date:2019年11月29日 下午3:45:14
 	 */
-	UserDataVO getAuthPermissions(String userId, String tenantId, String accountType);
+	UserDataVO getAuthPermissions(String userId);
 
 }

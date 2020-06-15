@@ -3,6 +3,7 @@ package com.qding.eyecloud.model;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.util.Date;
 import com.qding.eyecloud.base.BaseModel;
+import com.qding.eyecloud.base.BaseTreeModel;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
@@ -16,12 +17,9 @@ import io.swagger.annotations.ApiModelProperty;
  */
 @TableName("qdh_auth_tenant_info")
 @ApiModel(value="AuthTenantInfo对象", description="qdh_租户表")
-public class AuthTenantInfo extends BaseModel {
+public class AuthTenantInfo extends BaseTreeModel {
 
     private static final long serialVersionUID = 1L;
-
-    @ApiModelProperty(value = "主键id")
-    private String id;
 
     @ApiModelProperty(value = "租户名称")
     private String tenantName;
@@ -50,36 +48,8 @@ public class AuthTenantInfo extends BaseModel {
     @ApiModelProperty(value = "租户描述")
     private String description;
 
-    @ApiModelProperty(value = "父节点id（-1为顶层）")
-    private String parentId;
-
     @ApiModelProperty(value = "是否可用(0 不可用 1 可用)")
     private String status;
-
-    @ApiModelProperty(value = "版本号字段，用于乐观锁")
-    private Integer version;
-
-    @ApiModelProperty(value = "创建人")
-    private String creator;
-
-    @ApiModelProperty(value = "创建时间")
-    private Date createTime;
-
-    @ApiModelProperty(value = "修改人")
-    private String updator;
-
-    @ApiModelProperty(value = "修改时间")
-    private Date updateTime;
-
-    @Override
-    public String getId() {
-        return id;
-    }
-
-    @Override
-    public void setId(String id) {
-        this.id = id;
-    }
 
     public void setTenantName(String tenantName) {
         this.tenantName = tenantName;
@@ -140,65 +110,12 @@ public class AuthTenantInfo extends BaseModel {
     public void setDescription(String description) {
         this.description = description;
     }
-    public String getParentId() {
-        return parentId;
-    }
-
-    public void setParentId(String parentId) {
-        this.parentId = parentId;
-    }
     public String getStatus() {
         return status;
     }
 
     public void setStatus(String status) {
         this.status = status;
-    }
-
-    @Override
-    public Integer getVersion() {
-        return version;
-    }
-
-    @Override
-    public void setVersion(Integer version) {
-        this.version = version;
-    }
-    @Override
-    public String getCreator() {
-        return creator;
-    }
-
-    @Override
-    public void setCreator(String creator) {
-        this.creator = creator;
-    }
-    @Override
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    @Override
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-    @Override
-    public String getUpdator() {
-        return updator;
-    }
-
-    @Override
-    public void setUpdator(String updator) {
-        this.updator = updator;
-    }
-    @Override
-    public Date getUpdateTime() {
-        return updateTime;
-    }
-
-    @Override
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
     }
 
     @Override

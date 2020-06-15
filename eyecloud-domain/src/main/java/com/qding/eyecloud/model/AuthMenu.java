@@ -21,9 +21,6 @@ public class AuthMenu extends BaseTreeModel {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty(value = "主键id")
-    private String id;
-
     @ApiModelProperty(value = "菜单名称")
     private String menuName;
 
@@ -42,33 +39,6 @@ public class AuthMenu extends BaseTreeModel {
     @ApiModelProperty(value = "平台类型，用来进行多个平台见的权限转换")
     private String platCode;
 
-    @ApiModelProperty(value = "-1为顶层菜单")
-    private String parentMenuId;
-
-    @ApiModelProperty(value = "版本号字段，用于乐观锁")
-    private Integer version;
-
-    @ApiModelProperty(value = "创建人")
-    private String creator;
-
-    @ApiModelProperty(value = "创建时间")
-    private Date createTime;
-
-    @ApiModelProperty(value = "修改人")
-    private String updator;
-
-    @ApiModelProperty(value = "修改时间")
-    private Date updateTime;
-
-    @Override
-    public String getId() {
-        return id;
-    }
-
-    @Override
-    public void setId(String id) {
-        this.id = id;
-    }
     public String getMenuName() {
         return menuName;
     }
@@ -111,58 +81,6 @@ public class AuthMenu extends BaseTreeModel {
     public void setPlatCode(String platCode) {
         this.platCode = platCode;
     }
-    public String getParentMenuId() {
-        return parentMenuId;
-    }
-
-    public void setParentMenuId(String parentMenuId) {
-        this.parentMenuId = parentMenuId;
-    }
-    @Override
-    public Integer getVersion() {
-        return version;
-    }
-
-    @Override
-    public void setVersion(Integer version) {
-        this.version = version;
-    }
-    @Override
-    public String getCreator() {
-        return creator;
-    }
-
-    @Override
-    public void setCreator(String creator) {
-        this.creator = creator;
-    }
-    @Override
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    @Override
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-    @Override
-    public String getUpdator() {
-        return updator;
-    }
-
-    @Override
-    public void setUpdator(String updator) {
-        this.updator = updator;
-    }
-    @Override
-    public Date getUpdateTime() {
-        return updateTime;
-    }
-
-    @Override
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
-    }
 
     @Override
     public String toString() {
@@ -174,7 +92,7 @@ public class AuthMenu extends BaseTreeModel {
         ", menuIcon=" + menuIcon +
         ", menuSort=" + menuSort +
         ", platCode=" + platCode +
-        ", parentMenuId=" + parentMenuId +
+        ", parentId=" + parentId +
         ", version=" + version +
         ", creator=" + creator +
         ", createTime=" + createTime +

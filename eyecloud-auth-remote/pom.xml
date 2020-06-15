@@ -56,12 +56,6 @@
             <artifactId>javassist</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>io.jsonwebtoken</groupId>
-            <artifactId>jjwt</artifactId>
-            <scope>provided</scope>
-        </dependency>
-
         <!-- 业务jar包 start -->
         <dependency>
             <groupId>com.qding</groupId>

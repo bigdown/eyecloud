@@ -20,9 +20,6 @@ public class AuthUser extends BaseModel {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty(value = "主键id")
-    private String id;
-
     @ApiModelProperty(value = "租户id")
     private String tenantId;
 
@@ -50,30 +47,6 @@ public class AuthUser extends BaseModel {
     @ApiModelProperty(value = "账号类型：0普通账号，1超级管理员，2租户管理员，3项目管理员")
     private String accountType;
 
-    @ApiModelProperty(value = "版本号字段，用于乐观锁")
-    private Integer version;
-
-    @ApiModelProperty(value = "创建人")
-    private String creator;
-
-    @ApiModelProperty(value = "创建时间")
-    private Date createTime;
-
-    @ApiModelProperty(value = "修改人")
-    private String updator;
-
-    @ApiModelProperty(value = "修改时间")
-    private Date updateTime;
-
-    @Override
-    public String getId() {
-        return id;
-    }
-
-    @Override
-    public void setId(String id) {
-        this.id = id;
-    }
     public String getTenantId() {
         return tenantId;
     }
@@ -136,51 +109,6 @@ public class AuthUser extends BaseModel {
 
     public void setAccountType(String accountType) {
         this.accountType = accountType;
-    }
-    @Override
-    public Integer getVersion() {
-        return version;
-    }
-
-    @Override
-    public void setVersion(Integer version) {
-        this.version = version;
-    }
-    @Override
-    public String getCreator() {
-        return creator;
-    }
-
-    @Override
-    public void setCreator(String creator) {
-        this.creator = creator;
-    }
-    @Override
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    @Override
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-    @Override
-    public String getUpdator() {
-        return updator;
-    }
-
-    @Override
-    public void setUpdator(String updator) {
-        this.updator = updator;
-    }
-    @Override
-    public Date getUpdateTime() {
-        return updateTime;
-    }
-
-    @Override
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
     }
 
     @Override

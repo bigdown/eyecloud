@@ -45,7 +45,7 @@ import io.jsonwebtoken.Claims;
  * @Date: 2019年11月28日
  * @since [产品/模块版本]
  */
-@Service
+@Service(interfaceClass = IAuthFacade.class, interfaceName = "authFacadeProvider")
 public class AuthFacadeProvider implements IAuthFacade {
 
     @Autowired
@@ -186,10 +186,13 @@ public class AuthFacadeProvider implements IAuthFacade {
      * @since [产品/模块版本]
      **/
     @Override
-    public UserDataVO getAuthPermissions(String userId, String tenantId, String accountType) {
-        A.checkParams(StringUtils.isBlank(accountType), "账号类型accountType不能为空");
+    public UserDataVO getAuthPermissions(String userId) {
+
+        A.checkParams(StringUtils.isBlank(userId), "账号userId不能为空");
+
+        AuthUser authUser = iAuthUserDao.getById(userId);
         UserDataVO userDataVO = new UserDataVO();
-        AuthUserTypeEnum userType = AuthUserTypeEnum.getByCode(accountType);
+        AuthUserTypeEnum userType = AuthUserTypeEnum.getByCode(authUser.getAccountType());
         LambdaQueryWrapper<AuthUserRole> query = Wrappers.<AuthUserRole>lambdaQuery();
         Set<String> roleIds = null;
 
@@ -197,14 +200,14 @@ public class AuthFacadeProvider implements IAuthFacade {
             // 超级管理员拥有所有权限
         } else if (AuthUserTypeEnum.T_ADMIN.getType().equals(userType.getType())) {
             // 租户管理员拥有该租户下面的所有权限
-            A.checkParams(StringUtils.isBlank(tenantId), "租户tenantId不能为空");
-            query.eq(AuthUserRole::getTenantId, tenantId);
+            A.checkParams(StringUtils.isBlank(authUser.getTenantId()), "租户tenantId不能为空");
+            query.eq(AuthUserRole::getTenantId, authUser.getTenantId());
             roleIds = iAuthUserRoleDao.list(query).stream().map(AuthUserRole::getRoleId).collect(Collectors.toSet());
         } else if (AuthUserTypeEnum.P_ADMIN.getType().equals(userType.getType())) {
             // 项目管理员拥有该项目下面的所有权限
             // 获取项目管理所管理的项目
-            A.checkParams(StringUtils.isBlank(tenantId), "租户id不能为空");
-            List<AuthUserProject> authUserProjectList = iAuthUserProjectDao.list(Wrappers.<AuthUserProject>lambdaQuery().eq(AuthUserProject::getTenantId, tenantId).eq(AuthUserProject::getUserId, userId));
+            A.checkParams(StringUtils.isBlank(authUser.getTenantId()), "租户id不能为空");
+            List<AuthUserProject> authUserProjectList = iAuthUserProjectDao.list(Wrappers.<AuthUserProject>lambdaQuery().eq(AuthUserProject::getTenantId, authUser.getTenantId()).eq(AuthUserProject::getUserId, userId));
             A.checkBusiness(CollectionUtils.isEmpty(authUserProjectList), "该项目管理员没有关联项目");
             query.in(AuthUserRole::getProjectId, authUserProjectList.stream().map(AuthUserProject::getProjectId).collect(Collectors.toSet()));
             roleIds = iAuthUserRoleDao.list(query).stream().map(AuthUserRole::getRoleId).collect(Collectors.toSet());
@@ -219,7 +222,7 @@ public class AuthFacadeProvider implements IAuthFacade {
             return userDataVO;
         }
         Set<String> menuIds = iAuthRoleMenuDao
-                .list(Wrappers.<AuthRoleMenu>lambdaQuery().eq(AuthRoleMenu::getTenantId, tenantId)
+                .list(Wrappers.<AuthRoleMenu>lambdaQuery().eq(AuthRoleMenu::getTenantId, authUser.getTenantId())
                         .in(!CollectionUtils.isEmpty(roleIds), AuthRoleMenu::getRoleId, roleIds))
                 .stream()
                 .map(AuthRoleMenu::getMenuId)

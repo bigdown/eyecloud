@@ -28,10 +28,6 @@
 		<module>eyecloud-api</module>
 		<module>eyecloud-webflux</module>
 
-		<!-- 视频相关 -->
-		<module>eyecloud-video-facade</module>
-		<module>eyecloud-video-remote</module>
-
 		<!-- 搜索服务相关 -->
 		<module>eyecloud-search-common</module>
 		<module>eyecloud-search-facade</module>
@@ -90,12 +86,6 @@
 			<dependency>
 				<groupId>com.qding</groupId>
 				<artifactId>eyecloud-auth-facade</artifactId>
-				<version>0.0.1-SNAPSHOT</version>
-			</dependency>
-
-			<dependency>
-				<groupId>com.qding</groupId>
-				<artifactId>eyecloud-video-facade</artifactId>
 				<version>0.0.1-SNAPSHOT</version>
 			</dependency>
 

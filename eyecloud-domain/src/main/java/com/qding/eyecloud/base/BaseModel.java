@@ -10,22 +10,22 @@ public class BaseModel implements Serializable {
     private static final long serialVersionUID = 4273025517736737059L;
 
     @ApiModelProperty(value = "主键id")
-    private String id;
+    protected String id;
     
     @ApiModelProperty(value = "版本号字段，用于乐观锁")
-    private Integer version;
+    protected Integer version;
     
     @ApiModelProperty(value = "创建人")
-    private String creator;
+    protected String creator;
     
     @ApiModelProperty(value = "创建时间")
-    private Date createTime;
+    protected Date createTime;
     
     @ApiModelProperty(value = "修改人")
-    private String updator;
+    protected String updator;
     
     @ApiModelProperty(value = "修改时间")
-    private Date updateTime;
+    protected Date updateTime;
     
     public String getId() {
         return id;

@@ -3,8 +3,8 @@ spring:
     type: com.alibaba.druid.pool.DruidDataSource
     driverClassName: com.mysql.jdbc.Driver
     druid:
-      url: jdbc:mysql://192.168.0.38:3306/wotc_dev?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&useUnicode=true&zeroDateTimeBehavior=convertToNull&useSSL=false
-      username: block
+      url: jdbc:mysql://127.0.0.1:8066/insight
+      username: root
       password: 123456
       initial-size: 10
       max-active: 100

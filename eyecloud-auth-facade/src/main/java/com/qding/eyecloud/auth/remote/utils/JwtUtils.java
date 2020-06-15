@@ -32,8 +32,29 @@ public class JwtUtils {
     public static final long EXPIRATION_REMEMBER = 604800L;
 
     /**
+     * 加密id
+     *
+     * @param id
+     * @return
+     */
+    public static String zipId(String id) {
+        return id;
+    }
+
+    /**
+     * 解密id
+     *
+     * @param id
+     * @return
+     */
+    public static String unZipId(String id) {
+        return id;
+    }
+
+    /**
      * 创建token
      * 注：如果是根据可变的唯一值来生成，唯一值变化时，需重新生成token
+     *
      * @param isRememberMe
      * @return
      */
@@ -43,19 +64,20 @@ public class JwtUtils {
         // id是重要信息，进行加密下
         String encryId = id;
         return Jwts.builder()
-            .signWith(SignatureAlgorithm.HS512, SECRET)
-            // 这里要早set一点，放到后面会覆盖别的字段
-            // .setClaims(claims)
-            .setIssuer(ISS)
-            .setId(encryId)
-            .setSubject(json)
-            .setIssuedAt(new Date())
-            .setExpiration(new Date(System.currentTimeMillis() + expiration * 1000))
-            .compact();
+                .signWith(SignatureAlgorithm.HS512, SECRET)
+                // 这里要早set一点，放到后面会覆盖别的字段
+                // .setClaims(claims)
+                .setIssuer(ISS)
+                .setId(encryId)
+                .setSubject(json)
+                .setIssuedAt(new Date())
+                .setExpiration(new Date(System.currentTimeMillis() + expiration * 1000))
+                .compact();
     }
 
     /**
      * 从token中获取用户名
+     *
      * @param token
      * @return
      */
@@ -65,6 +87,7 @@ public class JwtUtils {
 
     /**
      * 从token中获取ID，同时做解密处理
+     *
      * @param token
      * @return
      */
@@ -74,6 +97,7 @@ public class JwtUtils {
 
     /**
      * 获取token信息，同时也做校验处理
+     *
      * @param token
      * @return
      */

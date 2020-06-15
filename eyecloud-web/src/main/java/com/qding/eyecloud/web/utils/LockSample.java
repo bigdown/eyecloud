@@ -1,6 +1,5 @@
 package com.qding.eyecloud.web.utils;
 
-import com.qding.eyecloud.web.controller.CallbackController;
 import org.apache.zookeeper.*;
 import org.apache.zookeeper.data.Stat;
 import org.slf4j.Logger;
