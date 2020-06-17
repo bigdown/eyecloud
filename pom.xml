@@ -13,8 +13,6 @@
 
 	<modules>
 		<module>eyecloud-common</module>
-		<module>eyecloud-util</module>
-		<module>eyecloud-util-spring</module>
 		<module>eyecloud-domain</module>
 		<module>eyecloud-dao</module>
 
