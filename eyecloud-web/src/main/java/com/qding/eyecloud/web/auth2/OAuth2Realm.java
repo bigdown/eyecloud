@@ -1,14 +1,20 @@
 package com.qding.eyecloud.web.auth2;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.qding.eyecloud.auth.remote.utils.JwtUtils;
 import com.qding.eyecloud.base.BaseTreeModel;
+import com.qding.eyecloud.common.constants.EyecloudConstants;
 import com.qding.eyecloud.common.data.base.TreeVO;
 import com.qding.eyecloud.common.data.response.auth.AuthMenuVO;
 import com.qding.eyecloud.common.data.response.auth.AuthOperateVO;
 import com.qding.eyecloud.common.data.response.auth.UserDataVO;
+import com.qding.eyecloud.common.utils.JsonUtil;
 import com.qding.eyecloud.model.AuthUser;
+import com.qding.eyecloud.web.cache.RedisCache;
 import com.qding.eyecloud.web.facade.RpcFacade;
+import com.qding.eyecloud.web.utils.RedisUtil;
 import com.qding.eyecloud.web.utils.SpringContextUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -19,7 +25,6 @@ import org.apache.shiro.authz.UnauthorizedException;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.util.CollectionUtils;
-import org.springframework.util.StringUtils;
 
 import java.util.HashSet;
 import java.util.List;
@@ -51,9 +56,7 @@ public class OAuth2Realm extends AuthorizingRealm {
         if (authUser == null) {
             throw new RuntimeException("authUser is empty");
         }
-        // 如果是管理员，则认为有所有权限
-        UserDataVO userDataVO =
-                ((RpcFacade) SpringContextUtils.getBean("rpcFacade")).iAuthFacade.getAuthPermissions(authUser.getId());
+        UserDataVO userDataVO = RedisCache.getAndSetUserCache(authUser.getId());
         // 用户权限列表
         Set<String> permsSet = new HashSet<>();
         if (userDataVO != null && !CollectionUtils.isEmpty(userDataVO.getPermissions())) {

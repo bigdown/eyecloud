@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.qding.eyecloud.common.data.request.auth.LoginVO;
 import com.qding.eyecloud.common.data.response.auth.AuthUserVO;
+import com.qding.eyecloud.common.data.response.auth.UserDataVO;
+import com.qding.eyecloud.web.cache.RedisCache;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Controller;
@@ -30,30 +32,30 @@ import com.qding.eyecloud.web.facade.RpcFacade;
  */
 @Controller
 public class AuthController {
-    
+
     @Autowired
     private Producer producer;
-    
+
     @Autowired
     private RpcFacade rpcFacade;
 
     @GetMapping("captcha.jpg")
     public void captcha(HttpServletResponse response)
-        throws IOException {
+            throws IOException {
         response.setHeader("Cache-Control", "no-store, no-cache");
         response.setContentType("image/jpeg");
-        
+
         // 生成文字验证码
         String text = producer.createText();
         // 生成图片验证码
         BufferedImage image = producer.createImage(text);
         // 保存到shiro session
         ShiroUtils.setSessionAttribute(Constants.KAPTCHA_SESSION_KEY, text);
-        
+
         ServletOutputStream out = response.getOutputStream();
         ImageIO.write(image, "jpg", out);
     }
-    
+
     /**
      * 登录
      */
@@ -71,7 +73,7 @@ public class AuthController {
         AuthUserVO authUser = rpcFacade.iAuthFacade.getAuthUser(req, true, true);
         return RestResponse.ok(authUser);
     }
-    
+
     /**
      * 注册
      */
@@ -81,5 +83,16 @@ public class AuthController {
         // 调用注册逻辑
         AuthUser authUser = rpcFacade.iAuthFacade.register(req);
         return RestResponse.ok(authUser);
+    }
+
+    /**
+     * 获取用户基本信息以及权限菜单
+     *
+     * @return
+     */
+    @PostMapping(value = "/auth/permissions")
+    @ResponseBody
+    public RestResponse<UserDataVO> getUserMenuOperates() {
+        return RestResponse.ok(RedisCache.getAndSetUserCache(ShiroUtils.getUserId()));
     }
 }

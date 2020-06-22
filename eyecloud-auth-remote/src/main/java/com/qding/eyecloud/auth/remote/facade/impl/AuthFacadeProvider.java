@@ -186,7 +186,7 @@ public class AuthFacadeProvider implements IAuthFacade {
      * @since [产品/模块版本]
      **/
     @Override
-    public UserDataVO getAuthPermissions(String userId) {
+    public UserDataVO getAuthPermissions(String userId, String platCode) {
 
         A.checkParams(StringUtils.isBlank(userId), "账号userId不能为空");
 
@@ -232,7 +232,8 @@ public class AuthFacadeProvider implements IAuthFacade {
             return userDataVO;
         }
         List<AuthMenu> menus = iAuthMenuDao
-                .list(Wrappers.<AuthMenu>lambdaQuery().in(!CollectionUtils.isEmpty(menuIds), AuthMenu::getId, menuIds));
+                .list(Wrappers.<AuthMenu>lambdaQuery().in(!CollectionUtils.isEmpty(menuIds), AuthMenu::getId, menuIds)
+                        .eq(StringUtils.isNotBlank(platCode), AuthMenu::getPlatCode, platCode));
         List<AuthMenuOperate> operates = iAuthMenuOperateDao.list(Wrappers.<AuthMenuOperate>lambdaQuery()
                 .in(!CollectionUtils.isEmpty(menuIds), AuthMenuOperate::getMenuId, menuIds));
         // 转换成map，在进行数据组装

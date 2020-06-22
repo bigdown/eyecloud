@@ -5,6 +5,7 @@ import java.util.Date;
 import com.qding.eyecloud.base.BaseModel;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 /**
  * <p>
@@ -25,6 +26,15 @@ public class AuthUser extends BaseModel {
 
     @ApiModelProperty(value = "用户账号")
     private String account;
+
+    @ApiModelProperty(value = "用户头像")
+    private String avatar;
+
+    @ApiModelProperty(value = "用户位置")
+    private String address;
+
+    @ApiModelProperty(value = "用户岗位")
+    private String position;
 
     @ApiModelProperty(value = "手机号")
     private String mobile;
@@ -111,24 +121,51 @@ public class AuthUser extends BaseModel {
         this.accountType = accountType;
     }
 
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getPosition() {
+        return position;
+    }
+
+    public void setPosition(String position) {
+        this.position = position;
+    }
+
     @Override
     public String toString() {
-        return "AuthUser{" +
-        "id=" + id +
-        ", tenantId=" + tenantId +
-        ", account=" + account +
-        ", mobile=" + mobile +
-        ", email=" + email +
-        ", password=" + password +
-        ", salt=" + salt +
-        ", realName=" + realName +
-        ", nickName=" + nickName +
-        ", accountType=" + accountType +
-        ", version=" + version +
-        ", creator=" + creator +
-        ", createTime=" + createTime +
-        ", updator=" + updator +
-        ", updateTime=" + updateTime +
-        "}";
+        return new ToStringBuilder(this)
+                .append("tenantId", tenantId)
+                .append("account", account)
+                .append("avatar", avatar)
+                .append("address", address)
+                .append("position", position)
+                .append("mobile", mobile)
+                .append("email", email)
+                .append("password", password)
+                .append("salt", salt)
+                .append("realName", realName)
+                .append("nickName", nickName)
+                .append("accountType", accountType)
+                .append("id", id)
+                .append("version", version)
+                .append("creator", creator)
+                .append("createTime", createTime)
+                .append("updator", updator)
+                .append("updateTime", updateTime)
+                .toString();
     }
 }

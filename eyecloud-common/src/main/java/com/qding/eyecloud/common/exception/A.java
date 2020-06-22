@@ -12,6 +12,12 @@ import com.qding.eyecloud.common.constants.EyecloudConstants;
  * @Date: 2019年11月28日
  */
 public class A {
+
+    public static void checkAuth(boolean result) {
+        if(result) {
+            throw new CommonException("登录失效", "401");
+        }
+    }
     
     public static void checkParams(boolean result) {
         if (result) {

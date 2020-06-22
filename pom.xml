@@ -507,7 +507,6 @@
 				<version>7.5.0</version>
 			</dependency>
 
-
 			<dependency>
 				<groupId>com.zeroc</groupId>
 				<artifactId>icegrid</artifactId>

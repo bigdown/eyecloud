@@ -25,4 +25,15 @@ public class EyecloudConstants {
     
     public static final String DEVICE_STATUS = "device_status";
 
+
+	/**
+	 * 用户缓存数据
+	 */
+	public static final String AUTH_USER_DATA = "qd:auth:user:";
+
+	/**
+	 * 限制条数模板
+	 */
+	public static final String LIMIT_TEMPLATE = "limt %d";
+
 }
