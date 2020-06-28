@@ -1,1 +1,1 @@
-traceLog=com.qding.eyecloud.common.log.filter.TraceLogFilter
+traceLog=TraceLogFilter

@@ -1,0 +1,14 @@
+server:
+  tomcat:
+    uri-encoding: UTF-8
+  port: 7015
+spring:
+  profiles:
+    active: dev
+  application:
+    name: ware-drool-rule
+  http:
+    encoding:
+      charset: UTF-8
+      force: true
+      enabled: true
