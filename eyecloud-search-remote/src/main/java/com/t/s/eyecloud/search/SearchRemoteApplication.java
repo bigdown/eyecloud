@@ -16,7 +16,7 @@ import org.springframework.context.annotation.ComponentScan;
  * Date:2019年12月13日 上午9:11:42
  */
 @SpringBootApplication
-@ComponentScan(basePackages = {"com.qding.eyecloud"})
+@ComponentScan(basePackages = {"com.t.s.eyecloud"})
 public class SearchRemoteApplication {
     
     private static final Logger logger = LoggerFactory.getLogger(SearchRemoteApplication.class);

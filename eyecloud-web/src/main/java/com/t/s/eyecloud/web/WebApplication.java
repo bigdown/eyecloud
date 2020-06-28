@@ -8,7 +8,7 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
-@ComponentScan(basePackages = { "com.qding.eyecloud" })
+@ComponentScan(basePackages = { "com.t.s.eyecloud" })
 public class WebApplication extends SpringBootServletInitializer {
 
 	public static void main(String[] args) {
