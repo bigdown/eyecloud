@@ -19,8 +19,8 @@ import java.util.concurrent.CountDownLatch;
  * Date:2019/12/27 15:40
  */
 @SpringBootApplication
-@ComponentScan(basePackages = {"com.qding.eyecloud"})
-@MapperScan(basePackages = {"com.qding.eyecloud.mapper"})
+@ComponentScan(basePackages = {"com.t.s.eyecloud"})
+@MapperScan(basePackages = {"com.t.s.eyecloud.mapper"})
 public class AuthRemoteApplication {
 
     private static final Logger logger = LoggerFactory.getLogger(AuthRemoteApplication.class);

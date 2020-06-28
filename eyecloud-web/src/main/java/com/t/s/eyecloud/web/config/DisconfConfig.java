@@ -22,7 +22,7 @@ public class DisconfConfig {
 	@Bean(destroyMethod = "destroy")
 	public DisconfMgrBean getDisconfMgrBean() {
 		DisconfMgrBean disconfMgrBean = new DisconfMgrBean();
-		disconfMgrBean.setScanPackage("com.qding.eyecloud");
+		disconfMgrBean.setScanPackage("com.t.s.eyecloud");
 		return disconfMgrBean;
 	}
 

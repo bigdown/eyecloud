@@ -1,1 +1,1 @@
-traceLog=TraceLogFilter
+traceLog=com.t.s.eyecloud.common.log.filter.TraceLogFilter

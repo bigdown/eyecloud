@@ -33,7 +33,7 @@ public class DubboConfig {
 	@Bean
 	public AnnotationBean annotationBean() {
 		AnnotationBean annotationBean = new AnnotationBean();
-		annotationBean.setPackage("com.qding.eyecloud.controller");
+		annotationBean.setPackage("com.t.s.eyecloud.controller");
 		return annotationBean;
 	}
 

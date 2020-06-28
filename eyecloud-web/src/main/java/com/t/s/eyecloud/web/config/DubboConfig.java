@@ -35,7 +35,7 @@ public class DubboConfig {
 	@Bean
 	public AnnotationBean annotationBean() {
 		AnnotationBean annotationBean = new AnnotationBean();
-		annotationBean.setPackage("com.qding.eyecloud.web.facade");
+		annotationBean.setPackage("com.t.s.eyecloud.web.facade");
 		return annotationBean;
 	}
 

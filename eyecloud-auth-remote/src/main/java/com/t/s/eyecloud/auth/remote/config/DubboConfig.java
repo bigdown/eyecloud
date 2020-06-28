@@ -56,7 +56,7 @@ public class DubboConfig {
 	@Bean
 	public AnnotationBean annotationBean() {
 		AnnotationBean annotationBean = new AnnotationBean();
-		annotationBean.setPackage("com.qding.eyecloud.auth.remote.facade");
+		annotationBean.setPackage("com.t.s.eyecloud.auth.remote.facade");
 		return annotationBean;
 	}
 

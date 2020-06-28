@@ -21,7 +21,7 @@ public class DisconfConfig {
     public DisconfMgrBean getDisconfMgrBean() {
         DisconfMgrBean disconfMgrBean = new DisconfMgrBean();
         //你的需要被扫描的包
-        disconfMgrBean.setScanPackage("com.qding.eyecloud");
+        disconfMgrBean.setScanPackage("com.t.s.eyecloud");
         return disconfMgrBean;
     }
 
