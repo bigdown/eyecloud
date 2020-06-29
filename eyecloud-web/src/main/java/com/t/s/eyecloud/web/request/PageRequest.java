@@ -21,7 +21,6 @@ public class PageRequest<T> {
     private T data;
 
     @ApiModelProperty(value = "最后一条数据的id")
-    @NotBlank
     private String lastId;
 
     @ApiModelProperty(value = "请求分页大小")
@@ -42,5 +41,13 @@ public class PageRequest<T> {
 
     public void setPageSize(Long pageSize) {
         this.pageSize = pageSize;
+    }
+
+    public String getLastId() {
+        return lastId;
+    }
+
+    public void setLastId(String lastId) {
+        this.lastId = lastId;
     }
 }

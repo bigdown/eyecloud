@@ -1,6 +1,9 @@
 package com.t.s.eyecloud.web.controller.auth;
 
+import com.t.s.eyecloud.base.BaseTreeModel;
 import com.t.s.eyecloud.common.data.base.RestResponse;
+import com.t.s.eyecloud.common.data.base.TreeVO;
+import com.t.s.eyecloud.common.utils.TreeUtils;
 import com.t.s.eyecloud.model.AuthMenu;
 import com.t.s.eyecloud.web.facade.RpcFacade;
 import com.t.s.eyecloud.web.request.PageRequest;
@@ -34,8 +37,15 @@ public class MenuController {
      */
     @PostMapping(value = "/auth-menu/list")
     @ResponseBody
-    public RestResponse<List<AuthMenu>> getUserMenuOperates(@RequestBody @Validated PageRequest<AuthMenu> pageRequest) {
+    public RestResponse<List<AuthMenu>> list(@RequestBody @Validated PageRequest<AuthMenu> pageRequest) {
         return RestResponse.ok(rpcFacade.iAuthMenuFacade.limitAuthMenu(pageRequest.getData(), pageRequest.getPageSize()));
+    }
+
+    @PostMapping(value = "/auth-menu/tree")
+    @ResponseBody
+    public RestResponse<List<TreeVO<? extends BaseTreeModel>>> tree(@RequestBody @Validated AuthMenu authMenu) {
+        List<TreeVO<? extends BaseTreeModel>> tree = TreeUtils.startForTree(rpcFacade.iAuthMenuFacade.listAuthMenu(authMenu));
+        return RestResponse.ok(tree);
     }
 
     @PostMapping(value = "/auth-menu/add")

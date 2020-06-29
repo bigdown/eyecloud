@@ -45,7 +45,7 @@ public class TraceLogFilter implements Filter {
             
             // 如果获取到的也为空，则说明不是从request那边过来的
             if (StringUtils.isBlank(traceId)) {
-                traceId = "dubbo:" + SnowFlake.createSnowFlake().nextIdString();
+                traceId = "req:" + SnowFlake.createSnowFlake().nextIdString();
             }
             RpcContext.getContext().setAttachment(EyecloudConstants.TRACE_ID, traceId);
         }
