@@ -1,7 +1,7 @@
 package com.t.s.eyecloud.data.center.test;
 
-import com.t.s.eyecloud.data.center.facade.DataCenterRemoteApplication;
-import com.t.s.eyecloud.data.center.facade.service.MqttGateway;
+import com.t.s.eyecloud.data.center.remote.DataCenterRemoteApplication;
+import com.t.s.eyecloud.data.center.remote.service.MqttGateway;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

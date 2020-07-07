@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;
 
+/**
+ * @author Administrator
+ */
 @Api
 @RestController
 @RequestMapping("test")

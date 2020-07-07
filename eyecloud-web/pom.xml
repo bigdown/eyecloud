@@ -154,6 +154,11 @@
 
 		<dependency>
 			<groupId>com.qding</groupId>
+			<artifactId>eyecloud-data-center-facade</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>com.qding</groupId>
 			<artifactId>eyecloud-common</artifactId>
 		</dependency>
 

@@ -1,17 +1,15 @@
-package com.t.s.eyecloud.data.center.facade.config;
+package com.t.s.eyecloud.data.center.remote.config;
 
-import com.t.s.eyecloud.data.center.facade.service.AReceiveServiceImpl;
-import com.t.s.eyecloud.data.center.facade.service.BReceiveServiceImpl;
-import com.t.s.eyecloud.data.center.facade.service.IMqttReceiveService;
-import com.t.s.eyecloud.data.center.facade.service.TestReceiveServiceImpl;
+import com.t.s.eyecloud.data.center.remote.service.AReceiveServiceImpl;
+import com.t.s.eyecloud.data.center.remote.service.BReceiveServiceImpl;
+import com.t.s.eyecloud.data.center.remote.service.IMqttReceiveService;
+import com.t.s.eyecloud.data.center.remote.service.TestReceiveServiceImpl;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Lazy;
-import org.springframework.core.annotation.Order;
 import org.springframework.integration.annotation.IntegrationComponentScan;
 import org.springframework.integration.annotation.ServiceActivator;
 import org.springframework.integration.channel.DirectChannel;
@@ -25,7 +23,6 @@ import org.springframework.integration.mqtt.support.MqttHeaders;
 import org.springframework.messaging.*;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -39,7 +36,6 @@ import java.util.concurrent.ConcurrentHashMap;
  * @since [产品/模块版本]
  */
 @Component
-@Order(1)
 @IntegrationComponentScan
 public class MqttConfig {
 
@@ -75,7 +71,11 @@ public class MqttConfig {
 
     MqttPahoMessageDrivenChannelAdapter adapter = null;
 
-    Map<String, IMqttReceiveService> localMap = new ConcurrentHashMap<>();
+    private Map<String, IMqttReceiveService> localMap = new ConcurrentHashMap<>();
+
+    public Map<String, IMqttReceiveService> getLocalMap() {
+        return localMap;
+    }
 
     @Bean
     public MqttConnectOptions getMqttConnectOptions() {
@@ -150,6 +150,7 @@ public class MqttConfig {
             @Override
             public void handleMessage(Message<?> message) throws MessagingException {
                 try {
+                    logger.info("message is {}", message);
                     String topic = message.getHeaders().get(MqttHeaders.RECEIVED_TOPIC).toString();
                     IMqttReceiveService iMqttReceiveService = localMap.get(topic);
                     if (iMqttReceiveService != null) {

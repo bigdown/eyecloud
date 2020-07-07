@@ -7,13 +7,13 @@ import com.t.s.eyecloud.common.utils.TreeUtils;
 import com.t.s.eyecloud.model.AuthMenu;
 import com.t.s.eyecloud.web.facade.RpcFacade;
 import com.t.s.eyecloud.web.request.PageRequest;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -27,7 +27,7 @@ import java.util.List;
 @RestController
 public class MenuController {
 
-    @Autowired
+    @Resource
     private RpcFacade rpcFacade;
 
     /**

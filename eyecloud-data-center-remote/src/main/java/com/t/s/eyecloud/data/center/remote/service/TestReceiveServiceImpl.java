@@ -1,4 +1,4 @@
-package com.t.s.eyecloud.data.center.facade.service;
+package com.t.s.eyecloud.data.center.remote.service;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,13 +13,13 @@ import java.util.Map;
  * @Date:
  * @since [产品/模块版本]
  */
-public class BReceiveServiceImpl implements IMqttReceiveService {
+public class TestReceiveServiceImpl implements IMqttReceiveService {
 
-    private static final Logger logger = LoggerFactory.getLogger(BReceiveServiceImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(TestReceiveServiceImpl.class);
 
     @Override
     public Map<String, String> handlerMqttMessage(String topic, String message) {
-        logger.info("B topic {}, message {}", topic, message);
+        logger.info("test topic {}, message {}", topic, message);
         return null;
     }
 }

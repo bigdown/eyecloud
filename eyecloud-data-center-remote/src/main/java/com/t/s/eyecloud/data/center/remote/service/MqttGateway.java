@@ -1,6 +1,6 @@
-package com.t.s.eyecloud.data.center.facade.service;
+package com.t.s.eyecloud.data.center.remote.service;
 
-import com.t.s.eyecloud.data.center.facade.config.MqttConfig;
+import com.t.s.eyecloud.data.center.remote.config.MqttConfig;
 import org.springframework.integration.annotation.MessagingGateway;
 import org.springframework.integration.mqtt.support.MqttHeaders;
 import org.springframework.messaging.handler.annotation.Header;

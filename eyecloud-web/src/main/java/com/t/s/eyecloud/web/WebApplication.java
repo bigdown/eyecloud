@@ -7,6 +7,9 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.ComponentScan;
 
+/**
+ * @author Administrator
+ */
 @SpringBootApplication
 @ComponentScan(basePackages = { "com.t.s.eyecloud" })
 public class WebApplication extends SpringBootServletInitializer {

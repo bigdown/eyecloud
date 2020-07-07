@@ -1,4 +1,4 @@
-package com.t.s.eyecloud.data.center.facade;
+package com.t.s.eyecloud.data.center.remote;
 
 import org.mybatis.spring.annotation.MapperScan;
 import org.slf4j.Logger;

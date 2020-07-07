@@ -108,6 +108,7 @@ public class ShiroConfig {
         filterMap.put("/**/*.js", "anon");
         
         filterMap.put("/", "anon");
+        filterMap.put("/model/**", "anon");
         filterMap.put("/**", "auth");
         shiroFilter.setFilterChainDefinitionMap(filterMap);
         
