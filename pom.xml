@@ -31,8 +31,10 @@
 		<module>eyecloud-search-facade</module>
 		<module>eyecloud-search-remote</module>
         <module>eyecloud-rule</module>
+		<module>eyecloud-data-center-facade</module>
+		<module>eyecloud-data-center-remote</module>
 
-    </modules>
+	</modules>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -86,6 +88,11 @@
 			<dependency>
 				<groupId>com.qding</groupId>
 				<artifactId>eyecloud-auth-facade</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+			</dependency>
+			<dependency>
+				<groupId>com.qding</groupId>
+				<artifactId>eyecloud-data-center-facade</artifactId>
 				<version>0.0.1-SNAPSHOT</version>
 			</dependency>
 
@@ -541,12 +548,25 @@
 				<version>7.5.0</version>
 			</dependency>
 
+			<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-integration -->
 			<dependency>
-				<groupId>com.zeroc</groupId>
-				<artifactId>icegrid</artifactId>
-				<version>3.7.3</version>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-starter-integration</artifactId>
+				<version>2.3.1.RELEASE</version>
 			</dependency>
 
+			<!-- https://mvnrepository.com/artifact/org.springframework.integration/spring-integration-stream -->
+			<dependency>
+				<groupId>org.springframework.integration</groupId>
+				<artifactId>spring-integration-stream</artifactId>
+				<version>5.3.1.RELEASE</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.springframework.integration</groupId>
+				<artifactId>spring-integration-mqtt</artifactId>
+				<version>5.3.1.RELEASE</version>
+			</dependency>
 		</dependencies>
 	</dependencyManagement>
 

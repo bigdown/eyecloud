@@ -1,0 +1,25 @@
+package com.t.s.eyecloud.data.center.facade.service;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.Map;
+
+/**
+ * description: <简述>
+ * info: <详细信息>
+ *
+ * @author: tanshen@qding.me
+ * @Date:
+ * @since [产品/模块版本]
+ */
+public class BReceiveServiceImpl implements IMqttReceiveService {
+
+    private static final Logger logger = LoggerFactory.getLogger(BReceiveServiceImpl.class);
+
+    @Override
+    public Map<String, String> handlerMqttMessage(String topic, String message) {
+        logger.info("B topic {}, message {}", topic, message);
+        return null;
+    }
+}

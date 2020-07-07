@@ -1,0 +1,51 @@
+package com.t.s.eyecloud.data.center.facade.service;
+
+import com.t.s.eyecloud.data.center.facade.config.MqttConfig;
+import org.springframework.integration.annotation.MessagingGateway;
+import org.springframework.integration.mqtt.support.MqttHeaders;
+import org.springframework.messaging.handler.annotation.Header;
+import org.springframework.stereotype.Component;
+
+
+/**
+ * description: <简述>
+ * info: <详细信息>
+ *
+ * @author: tanshen@qding.me
+ * @Date:
+ * @since [产品/模块版本]
+ */
+@Component
+@MessagingGateway(defaultRequestChannel = MqttConfig.CHANNEL_NAME_OUT)
+public interface MqttGateway {
+
+    /**
+     * 发送信息到MQTT服务器
+     *
+     * @param data 发送的文本
+     */
+    void sendToMqtt(String data);
+
+    /**
+     * 发送信息到MQTT服务器
+     *
+     * @param topic   主题
+     * @param payload 消息主体
+     */
+    void sendToMqtt(@Header(MqttHeaders.TOPIC) String topic,
+                    String payload);
+
+    /**
+     * 发送信息到MQTT服务器
+     *
+     * @param topic   主题
+     * @param qos     对消息处理的几种机制。<br> 0 表示的是订阅者没收到消息不会再次发送，消息会丢失。<br>
+     *                1 表示的是会尝试重试，一直到接收到消息，但这种情况可能导致订阅者收到多次重复消息。<br>
+     *                2 多了一次去重的动作，确保订阅者收到的消息有一次。
+     * @param payload 消息主体
+     */
+    void sendToMqtt(@Header(MqttHeaders.TOPIC) String topic,
+                    @Header(MqttHeaders.QOS) int qos,
+                    String payload);
+
+}

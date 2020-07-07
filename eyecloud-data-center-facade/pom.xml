@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>eyecloud</artifactId>
+        <groupId>com.qding</groupId>
+        <version>0.0.1-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>eyecloud-data-center-facade</artifactId>
+
+    <dependencies>
+
+        <dependency>
+            <groupId>com.qding</groupId>
+            <artifactId>eyecloud-domain</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.qding</groupId>
+            <artifactId>eyecloud-common</artifactId>
+        </dependency>
+
+    </dependencies>
+</project>
