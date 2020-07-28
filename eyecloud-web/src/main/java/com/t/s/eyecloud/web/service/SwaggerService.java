@@ -82,32 +82,6 @@ public class SwaggerService {
         pathJson.putAll(path.getJson());
         swagger.put("paths", pathJson);
 
-        JSONObject modelJson = new JSONObject();
-        SwaggerModel model = new SwaggerModel();
-        model.setId(SnowFlake.createSnowFlake().nextIdString());
-        json = "{" +
-                "       \"resultDto\": {\n" +
-                "       \"properties\": {\n" +
-                "       \"msg\": {\n" +
-                "       \"default\": \"成功\",\n" +
-                "       \"type\": \"string\"\n" +
-                "                      },\n" +
-                "       \"code\": {\n" +
-                "       \"default\": \"000000\",\n" +
-                "       \"type\": \"string\"\n" +
-                "                      },\n" +
-                "       \"data\": {\n" +
-                "       \"type\": \"object\"\n" +
-                "                      }\n" +
-                "                  }\n" +
-                "       }\n" +
-                "          }";
-        JSONObject modelObject = JSONObject.parseObject(json);
-        model.setJson(modelObject);
-        model.setName("model-name");
-        model.setSwaggerId(swaggerId);
-        modelJson.putAll(model.getJson());
-
         return swagger.toJSONString();
     }
 }

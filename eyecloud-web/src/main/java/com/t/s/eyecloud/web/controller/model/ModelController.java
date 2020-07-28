@@ -1,12 +1,15 @@
 package com.t.s.eyecloud.web.controller.model;
 
+import com.t.s.eyecloud.base.BaseModel;
 import com.t.s.eyecloud.common.data.base.RestResponse;
+import com.t.s.eyecloud.model.BaseProduct;
+import com.t.s.eyecloud.model.BaseProductProperty;
 import com.t.s.eyecloud.web.facade.RpcFacade;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
-import java.util.Map;
 
 /**
  * description: <简述>
@@ -23,22 +26,22 @@ public class ModelController {
     @Resource
     private RpcFacade rpcFacade;
 
-    @PostMapping(value = "/list")
+    @ApiOperation("/addProduct")
+    @PostMapping(value = "/addProduct")
     @ResponseBody
-    public RestResponse<List<Map<String, String>>> list() {
-        return RestResponse.ok(rpcFacade.iModelFacade.listModel());
+    public RestResponse<BaseModel> addProduct(@RequestBody BaseProduct baseProduct) {
+        return RestResponse.ok(rpcFacade.iModelFacade.addProduct(baseProduct));
     }
 
-    @PostMapping(value = "/add")
+    @PostMapping(value = "/listProduct")
     @ResponseBody
-    public RestResponse<Map<String, String>> add(@RequestBody Map<String, String> map) {
-        return RestResponse.ok(rpcFacade.iModelFacade.addModel(map));
+    public RestResponse<List<BaseProduct>> listProduct(@RequestBody BaseProduct baseProduct) {
+        return RestResponse.ok(rpcFacade.iModelFacade.listProduct(baseProduct));
     }
 
-    @PostMapping(value = "/remove")
+    @PostMapping(value = "/batchAddProductProperty")
     @ResponseBody
-    public RestResponse<Boolean> remove(String topic) {
-        return RestResponse.ok(rpcFacade.iModelFacade.removeModel(topic));
+    public RestResponse<Boolean> batchAddProductProperty(List<BaseProductProperty> baseProductProperties) {
+        return RestResponse.ok(rpcFacade.iModelFacade.batchAddProductProperty(baseProductProperties));
     }
-
 }

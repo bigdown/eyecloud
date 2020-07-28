@@ -175,3 +175,70 @@ create table qdh_auth_menu_operate
 	INDEX `menu_id` (`menu_id` ASC)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 comment 'qdh_操作表';
 
+
+CREATE TABLE `qdh_base_product` (
+  `id` varchar(64) NOT NULL,
+  `product_id` varchar(64) NOT NULL COMMENT '产品id',
+  `product_name` varchar(64) NOT NULL COMMENT '产品名称',
+  `identifier` varchar(64) NOT NULL COMMENT '产品代号',
+  `creator` varchar(64) DEFAULT NULL COMMENT '创建人',
+  `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `updator` varchar(64) DEFAULT NULL COMMENT '修改人',
+  `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uk_product_id` (`product_id`),
+  KEY `ix_product_id` (`product_id`),
+  KEY `ix_identifier` (`identifier`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='RBA-物模型-产品定义表';
+
+
+CREATE TABLE `qdh_base_product_property` (
+  `id` varchar(64) NOT NULL,
+  `product_id` varchar(64) NOT NULL COMMENT '产品id',
+  `property_id` varchar(64) NOT NULL COMMENT '属性id',
+  `identifier` varchar(64) NOT NULL COMMENT '属性代号',
+  `property_name` varchar(255) DEFAULT NULL COMMENT '属性名称',
+  `data_type` varchar(64) DEFAULT NULL COMMENT '属性字段类型',
+  `data_schema` varchar(64) DEFAULT NULL COMMENT '属性内容',
+  `creator` varchar(64) DEFAULT NULL COMMENT '创建人',
+  `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `updator` varchar(64) DEFAULT NULL COMMENT '修改人',
+  `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uk_product_property_id` (`product_id`,`property_id`),
+  KEY `ix_property_id` (`property_id`),
+  KEY `ix_identifier` (`identifier`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='RBA-物模型-产品属性表';
+
+
+
+CREATE TABLE `qdh_base_product_service` (
+  `id` varchar(64) NOT NULL,
+  `service_id` varchar(64) DEFAULT NULL COMMENT '服务id',
+  `product_id` varchar(64) NOT NULL COMMENT '产品id',
+  `service_name` varchar(64) NOT NULL COMMENT '服务名称',
+  `service_code` varchar(64) NOT NULL COMMENT '服务code',
+  `identifier` varchar(64) NOT NULL COMMENT '服务代号',
+  `creator` varchar(64) DEFAULT NULL COMMENT '创建人',
+  `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `updator` varchar(64) DEFAULT NULL COMMENT '修改人',
+  `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+  PRIMARY KEY (`id`),
+  KEY `ix_product_id` (`product_id`),
+  KEY `ix_identifier` (`identifier`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='RBA-物模型-服务定义表';
+
+
+CREATE TABLE `qdh_base_service_property_relation` (
+  `id` varchar(64) NOT NULL,
+  `service_id` varchar(64) DEFAULT NULL COMMENT '服务id',
+  `product_id` varchar(64) NOT NULL COMMENT '产品id',
+  `property_id` varchar(64) NOT NULL COMMENT '属性id',
+  `creator` varchar(64) DEFAULT NULL COMMENT '创建人',
+  `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `updator` varchar(64) DEFAULT NULL COMMENT '修改人',
+  `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uk_property_id` (`property_id`),
+  KEY `ix_property_id` (`property_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='RBA-物模型-服务属性关联表';
