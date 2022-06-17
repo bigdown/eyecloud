@@ -62,7 +62,7 @@
 		<output.jar.directory>../jar</output.jar.directory>
 		<kaptcha.version>0.0.9</kaptcha.version>
 		<sharding.jdbc.version>4.0.0-RC2</sharding.jdbc.version>
-		<drools.version>7.38.0.Final</drools.version>
+		<drools.version>7.60.0.Final</drools.version>
 	</properties>
 
 	<dependencyManagement>
